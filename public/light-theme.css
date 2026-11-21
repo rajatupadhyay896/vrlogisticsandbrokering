@@ -1,0 +1,317 @@
+/*
+ * V.R Logistics — light operational theme.
+ * Purely presentational: no changes to routes, forms, permissions or data.
+ * Inspiration: familiar messaging apps (clear white surfaces, quiet dividers,
+ * approachable rounded cards), restrained for freight and supply chain work.
+ */
+:root {
+  color-scheme: light;
+  --bg: #f4f6f4;
+  --bg2: #edf2ef;
+  --panel: #ffffff;
+  --panel2: #f8faf8;
+  --line: #d9e3df;
+  --dim: #5b706f;
+  --text: #24383e;
+  --white: #ffffff;
+  --lime: #286b59;
+  --lime-dark: #e8f2ed;
+  --cyan: #287f85;
+  --danger: #b64d52;
+  --warning: #986522;
+  --shadow: 0 4px 18px rgba(37, 61, 58, .055);
+}
+html { color-scheme: light; }
+body { background: var(--bg); color: var(--text); }
+input, textarea, select {
+  color: var(--text);
+  background: #ffffff;
+  border-color: #cfdad5;
+  box-shadow: inset 0 1px 1px rgba(30, 64, 56, .025);
+}
+input::placeholder, textarea::placeholder { color: #81928f; }
+select option { background: #ffffff; color: var(--text); }
+input[type=date] { color-scheme: light; }
+input[type=checkbox] { accent-color: var(--lime); }
+input:focus, select:focus, textarea:focus {
+  border-color: #4b9480;
+  box-shadow: 0 0 0 3px rgba(61, 136, 112, .13);
+}
+button:focus-visible, a:focus-visible { outline-color: #3c977c; }
+
+/* Quiet navigation, similar to a practical messaging workspace. */
+.site-header {
+  background: rgba(255, 255, 255, .96);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 2px 10px rgba(35, 66, 58, .035);
+}
+.brand-mark { background: #e8f1eb; color: #286b59; border: 1px solid #d9e8dd; }
+.brand-text strong { color: #25383d; }
+.brand-text strong span { color: #286b59; }
+.brand-text small { color: #738884; }
+.site-nav a { color: #536b69; }
+.site-nav a:hover, .site-nav a.active { color: #21634f; background: #eaf3ee; }
+.header-tag { color: #617b74; border-color: #d7e3dd; background: #f7faf7; }
+.signal-dot { background: #388669; box-shadow: 0 0 0 4px #e5f3e9; }
+.menu-btn { background: #ffffff; color: #27453d; border-color: #cddbd3; }
+.language-switch { background: #f1f5f2; border-color: #d5e2da; }
+.language-switch button { color: #667e75; }
+.language-switch button.active { background: #ffffff; color: #246850; box-shadow: 0 1px 5px #2c65521c; }
+
+/* Clear, unembellished logistics introduction. */
+.hero {
+  background: linear-gradient(120deg, #fcfdfb 0%, #f2f7f3 62%, #e7f1eb 100%);
+  border-bottom: 1px solid #dbe7df;
+}
+.hero:before { background-image: none; }
+.hero h1, .hero .eyebrow { color: #253b40; }
+.hero h1 em { color: #286b59; }
+.hero p { color: #566e6b; }
+.hero .fine { color: #617c77 !important; }
+.hero-illustration svg { filter: drop-shadow(0 12px 26px rgba(40, 70, 61, .1)); }
+.hero-stamp { color: #65877b; border-color: #acc8b7; }
+.hero-note {
+  background: rgba(255, 255, 255, .97);
+  color: #49635c;
+  border: 1px solid #d3e3da;
+  box-shadow: 0 5px 20px rgba(40, 74, 64, .09);
+}
+.hero-note strong { color: #296951; }
+.eyebrow { color: #356e5a; }
+.eyebrow:before { background: #65967d; }
+.ticker { background: #e6f0e9; color: #2e6654; border-bottom: 1px solid #d8e7de; }
+.section-head h2, .section-head h2 span,
+.page-heading h1, .page-heading h1 span { color: #243b40; }
+.section-head h2 span, .page-heading h1 span { color: #286b59; }
+.section-head p { color: #647975; }
+
+/* Familiar white message-card feel, but with businesslike borders. */
+.feature-card, .surface, .listing, .stat {
+  background: #ffffff;
+  border: 1px solid #d8e3de;
+  box-shadow: var(--shadow);
+}
+.feature-card, .surface, .listing { border-radius: 12px; }
+.feature-card:before { color: #e6efe9; opacity: .85; }
+.feature-card h3, .feature-card .eyebrow,
+.feature-card strong { color: #283d40; }
+.feature-card p { color: #617773; }
+.feature-icon { color: #2b7159; background: #ecf5ef; border-color: #dbeade; }
+.band { background: #edf3ef; border-color: #d7e4db; color: #233d3c; }
+.band h2 { color: #263f3e; }
+.band p { color: #637c73; }
+.page-heading { background: #edf3ef; border-bottom: 1px solid #dce8df; }
+.page-heading p { color: #607773; }
+.page-heading .eyebrow { color: #2d7059; }
+.load-home-section { background: #f2f6f3; border-color: #dce6df; }
+
+/* Buttons: restrained green for primary actions, white for secondary. */
+.btn {
+  background: #ffffff;
+  border-color: #cbdad3;
+  color: #2c4a45;
+  box-shadow: none;
+}
+.btn:hover { border-color: #82aa96; background: #f4f9f5; transform: translateY(-1px); }
+.btn.primary {
+  background: #2e715b;
+  color: #ffffff;
+  border-color: #2e715b;
+}
+.btn.primary:hover { background: #235c4a; border-color: #235c4a; }
+.btn.light { background: #ffffff; color: #2e6253; border-color: #c8dbd0; }
+.btn.light:hover { background: #eff6f1; }
+.btn.text, .link-action { background: transparent; color: #286b59; }
+.btn.danger { color: #a73e46; border-color: #e5bdc1; background: #fff8f8; }
+.btn.danger:hover { background: #fff0f0; }
+.btn:disabled { opacity: .55; }
+
+/* Forms, smaller helper text and operational instructions. */
+.surface-head { border-color: #e2eae5; background: #fcfdfc; }
+.surface-head h2, .surface-head h3, .surface-subhead,
+.info-side h3, .broker-login h2 { color: #263d42; }
+.surface-head p, .fine, .field small, .hint, .filter-note,
+.security-copy, .broker-login p { color: #697d79; }
+.field label, .field.checkbox-field label { color: #344f4d; }
+.field label .req { color: #2d7b5c; }
+.form-divide, .divider { background: #e0e9e3; }
+.info-side p, .check-item { color: #617772; }
+.check-item b { color: #2b4442; }
+.check-item .check { background: #e8f4eb; color: #2e785c; }
+.safety-note, .info-strip {
+  color: #47675e;
+  background: #eef6f0;
+  border-color: #d2e6d6;
+}
+.application-load-summary { background: #eef6f0; border-color: #cee5d4; }
+.application-load-summary strong { color: #285f4c; }
+.application-load-summary span { color: #537169; }
+.market-search span, .market-filter span { color: #435e58; }
+.load-material { color: #536b66; }
+.load-card-lane { color: #2b4443; }
+.load-card-lane .lane-arrow { color: #2e795e; }
+
+/* Truck cards, tags, progress, notices and payment states. */
+.listing-id, .listing-note { color: #728580; }
+.listing h3, .listing .route { color: #293d42; }
+.listing .route span { color: #2e785c; }
+.listing-info b {
+  color: #4a665e;
+  background: #f2f6f3;
+  border-color: #dbe6dd;
+}
+.listing-footer { color: #667d77; border-color: #e3eae5; }
+.listing-footer a { color: #286c55; }
+.status-pill {
+  background: #e9f4ed;
+  color: #246c4f;
+  border-color: #cce4d3;
+}
+.status-pill.muted { background: #eef2f2; color: #5e7374; border-color: #dbe4e3; }
+.status-pill.gold { background: #fff4df; color: #865b25; border-color: #ead7b5; }
+.status-pill.red { background: #fff0f0; color: #a4464a; border-color: #efd0d2; }
+.stat small { color: #697e78; }
+.stat strong, .money { color: #266b54; }
+.empty { color: #6b817a; }
+.empty .empty-icon { color: #43846a; }
+.empty strong { color: #2a4441; }
+.message { background: #eaf5ed; color: #3e6854; border-color: #c8e1cf; }
+.message strong { color: #255c45; }
+.message.error { background: #fff2f1; color: #9d4d4c; border-color: #eac9c7; }
+.message.error strong { color: #a54043; }
+
+/* Broker desk: a simple list-and-detail layout, like an inbox. */
+.admin-heading h2 { color: #293f42; }
+.admin-heading p { color: #667c77; }
+.admin-tabs { background: #f8faf8; border-color: #d9e5dd; }
+.admin-tabs button { color: #647b74; }
+.admin-tabs button.active { background: #e6f1ea; color: #286a53; }
+th { background: #f3f6f3; color: #5d7470; }
+td { border-color: #e3ebe6; color: #304c49; }
+td small { color: #71857e; }
+td strong { color: #293e42; }
+tr:hover td { background: #f8faf8; }
+.table-btn { background: #edf5ef; color: #2c7155; border-color: #c7dccd; }
+.table-btn:hover { background: #e2efe5; }
+.table-btn.ghost { background: #ffffff; color: #506c63; border-color: #d5e1da; }
+.detail-box { background: #f9fbf9; border-color: #dce7df; }
+.detail-box small { color: #6c817a; }
+.detail-box strong { color: #2d4542; }
+
+/* Documents, quotations, notifications and authentication dialogs. */
+.document-row { color: #37514e; border-color: #dfe9e2; }
+.quote-preview {
+  color: #304c46;
+  background: #f6f9f6;
+  border-color: #d7e5da;
+}
+.modal-backdrop { background: rgba(27, 42, 37, .38); backdrop-filter: blur(3px); }
+.modal { background: #ffffff; border-color: #d2e1d6; box-shadow: 0 22px 70px rgba(32, 52, 45, .17); }
+.modal-head { background: #fbfdfb; border-color: #e0e9e3; }
+.modal-head h2 { color: #263d40; }
+.modal-head p { color: #70847d; }
+.modal-foot { background: #fbfdfb; border-color: #dfe9e2; }
+.close-modal { background: #edf2ee; color: #3c5d50; }
+.setup-warning { background: #fff8e9; color: #866128; border-color: #eadbbd; }
+.setup-warning code { color: #77501c; }
+.small-row { color: #38534d; }
+.loading { color: #4a6960; }
+.spinner { border-color: #d6e5da; border-top-color: #2d7356; }
+
+/* Footers, phone links, language switch and success toast. */
+.site-footer { background: #ffffff; border-color: #d9e4dc; }
+.footer-main strong { color: #2d4342; }
+.footer-main p, .footer-main a, .footer-bottom { color: #677e75; }
+.footer-main a:hover { color: #286b59; }
+.footer-bottom { border-color: #e4ece6; }
+.call-number { color: #247357 !important; text-decoration-color: #9fc8af; }
+.call-number:hover, .call-number:focus-visible { color: #165a43 !important; }
+#toast { background: #315f4e; color: #ffffff; box-shadow: 0 10px 34px rgba(36, 73, 53, .2); }
+
+/* Bottom navigation on smaller phones and tablets: message-app clarity. */
+@media (max-width: 1160px) {
+  .site-nav { background: #ffffff; border-color: #dce7df; box-shadow: 0 10px 24px rgba(38, 70, 57, .08); }
+  .mobile-quick-nav {
+    background: rgba(255, 255, 255, .97);
+    border-top: 1px solid #d6e3d9;
+    box-shadow: 0 -4px 20px rgba(41, 66, 54, .08);
+  }
+  .mobile-quick-nav a { color: #687e77; }
+  .mobile-quick-nav a .quick-icon { color: #748b80; }
+  .mobile-quick-nav a.active { color: #246a51; background: #e9f4ed; }
+  .mobile-quick-nav a.active .quick-icon { color: #246a51; }
+}
+@media (max-width: 640px) {
+  .modal-backdrop { background: rgba(28, 43, 37, .36); }
+  .site-header { background: #ffffff; }
+}
+
+/* Language typography and user actions stay exactly as before. */
+[lang="hi"] .mobile-quick-nav a.active { color: #246a51; }
+[lang="hi"] .surface-head p, [lang="hi"] .fine { color: #617771; }
+
+/* Keep navigation, form controls and feedback reachable on touch screens. */
+.close-modal {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+}
+.modal { overscroll-behavior: contain; }
+body:has(.modal-backdrop) { overflow: hidden; }
+
+@media (max-width: 1160px) {
+  .site-header { z-index: 30; }
+  .site-nav {
+    top: 100%;
+    max-height: calc(100vh - 68px);
+    max-height: calc(100dvh - 68px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+  .site-nav a { flex-shrink: 0; }
+  .menu-btn, .language-switch button { min-width: 44px; min-height: 44px; }
+  #toast {
+    inset-inline: 12px;
+    bottom: calc(82px + env(safe-area-inset-bottom));
+    width: fit-content;
+    max-width: calc(100% - 24px);
+    margin-inline: auto;
+    pointer-events: none;
+  }
+  html {
+    scroll-padding-top: 76px;
+    scroll-padding-bottom: calc(84px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 640px) {
+  .site-header { gap: 6px; padding-inline: 10px; }
+  .brand { min-width: 0; gap: 6px; }
+  .brand-text small { font-size: 9px; letter-spacing: 1px; }
+  .hero-inner { padding: 26px 18px; gap: 16px; }
+  .hero h1 { font-size: clamp(36px, 10vw, 56px); margin-block: 12px; }
+  .hero p { font-size: 16px; line-height: 1.55; }
+  .hero-actions { gap: 8px; margin-top: 18px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hero-actions .btn { min-width: 0; padding-inline: 8px; }
+  .hero-illustration { width: min(100%, 380px); margin: 0 auto; }
+  .filter-bar input, .filter-bar select, .field input, .field select, .field textarea {
+    min-width: 0;
+    max-width: 100%;
+    font-size: 16px;
+  }
+  .form-grid { grid-template-columns: minmax(0, 1fr); }
+  .field { min-width: 0; }
+  .form-actions > .btn { width: 100%; }
+}
+
+@media (max-width: 640px) {
+  .admin-heading {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .admin-heading > div { grid-column: 1 / -1; }
+  .admin-heading .btn { width: 100%; }
+  .admin-tabs button { min-height: 44px; }
+}

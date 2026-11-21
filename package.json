@@ -1,0 +1,1 @@
+{"name":"vr-logistics-python","version":"1.0.0","private":true,"type":"module","scripts":{"build":"node scripts/build.mjs","test":"node --test tests/runtime.test.mjs"},"dependencies":{"pyodide":"0.27.7","@netlify/blobs":"^10.0.0"}}
