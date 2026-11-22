@@ -1,39 +1,34 @@
-# V.R Logistics and Brokering
+# Setu Logistics
 
-The freight API runs in Python. The mobile-first English/Hindi browser interface is carried over from the original V.R Logistics release `9bebd9b`. It uses the same routes, form fields and reference numbers.
+English and Hindi freight brokerage for truck owners, customers, drivers and the broker desk. The React and TypeScript frontend is in frontend/. The Java 21 Spring Boot API is in backend/. PostgreSQL stores booking records, private sessions and uploaded documents.
 
-## Run on Netlify
+## Start the complete app
 
-1. In Netlify, import this GitHub repository as a project. Select the main branch and leave the base directory at the repository root. The included netlify.toml sets the build command, publish directory, functions directory and runtime files.
-2. Before building, set BROKER_ADMIN_PASSWORD (at least 12 characters) and BROKER_SESSION_SECRET (at least 32 characters) as secret environment variables available to Functions. Use a password manager to generate and store these values.
-3. Deploy and open /api/freight/health. A working installation returns status ok and configured true. Open Broker desk and sign in with the configured password.
-
-A plain drag-and-drop upload of public/ serves the screens only. Use repository import to build the Python runtime and package the backend. Netlify runs a small JavaScript function that passes requests to bundled CPython via Pyodide. Python code in freight/ handles the business rules. Runtime files are installed at build time. Visitors do not download the Python interpreter. The Netlify adapter uses site-scoped Netlify Blobs. A new Netlify project starts with an empty database. This repository contains no customer records or uploaded files.
-
-## Run locally with native Python
-
-Use Python 3.11 or newer. Create a virtual environment and install requirements.txt. Set the two environment variables above, then run:
+Set DATABASE_PASSWORD and BROKER_ADMIN_PASSWORD in a local .env file. Choose a broker password of at least 12 characters. Run:
 
 ```sh
-python app.py
+docker compose up --build
 ```
 
-Open http://localhost:3000. PORT overrides the port. BROKER_DATA_DIR selects the private SQLite storage directory (default data/). Native records and uploaded documents are saved together in SQLite transactions. This local database is independent of Netlify.
+Open http://localhost:8080. The application serves both the UI and the API. PostgreSQL uses a persistent volume. A fresh installation starts with empty boards. A new database requires a separate migration to use any existing customer records and attachments.
 
-## Features
+## Development
 
-- Public truck and load boards, owner submissions, customer requirements, load applications and private contact details.
-- Broker login, dashboard, application review, matching and ranking, quotations, sharing, booking confirmation and JSON export.
-- Private driver links, ordered trip stages, payment and halt requests, broker review, POD evidence and private file download.
-- Separate customer receipts and trucker payments, balance checks and settlement before closing.
-- Responsive forms, English/Hindi labels, mobile shortcuts and laptop broker controls.
+Start PostgreSQL and set DATABASE_URL (a JDBC URL), DATABASE_USER, DATABASE_PASSWORD and BROKER_ADMIN_PASSWORD. From backend/ run mvn spring-boot:run with JDK 21. From the repository root run npm ci and npm run dev with Node 22. The Vite development server proxies /api/freight to the local Spring Boot service on port 8080.
 
-## Check the Netlify runtime locally
+Run npm run build to type-check and build the frontend. To exercise the freight lifecycle against a disposable, empty local database, start its Spring Boot instance and run:
 
 ```sh
-npm ci
-npm run build
-npm test
+TEST_API=http://127.0.0.1:8080 node --test tests/booking.test.mjs
 ```
 
-The integration test runs a full booking through the actual Netlify handler and its Python interpreter, using an in-memory storage double. It exercises owner applications, private broker access, quotation acceptance, driver requests, document upload/download, settlement, closure and export. The Netlify service itself requires verification after deployment. GitHub is the source of this build; the original production site is managed separately.
+The test reads BROKER_ADMIN_PASSWORD from the environment and creates sample records, payments and a document.
+
+## Hosting
+
+The Dockerfile packages the UI and API together for a Java-capable host. To publish only the frontend on Netlify, import this repository and set FREIGHT_API_ORIGIN to the HTTPS origin of your running Spring Boot API before building. The build generates a same-origin API rewrite. Set PUBLIC_ORIGIN on the backend to the exact public frontend origin (for example https://your-site.netlify.app). Configure the JDBC connection and broker password on the backend. Netlify publishes frontend/dist. Uploading frontend assets alone does not run Java or provide a database.
+
+## Photography
+
+Ashok Leyland e-Comet 2012, by SnapMeUp, from Wikimedia Commons (CC0). The landing page keeps all booking text separate from the photograph.
+https://commons.wikimedia.org/wiki/File:Ashok_Leyland_e-Comet_2012.JPG

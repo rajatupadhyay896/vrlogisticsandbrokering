@@ -59,7 +59,7 @@ export function tripDetail(dash,trip){
   detail('Current stage',esc(labels[trip.status]||trip.status))+
   detail('Trucker contact',contact(phone))+
   detail('Customer contact',contact(customerPhone))+
-  detail('V.R Logistics',contact('917738103505'))+
+  detail('Setu Logistics',contact('917738103505'))+
   detail('Customer freight',rupees(q?.customerRate||0))+
   detail('Owner freight',rupees(q?.truckerRate||0))+
   detail('Gross spread',rupees((q?.customerRate||0)-(q?.truckerRate||0)))+
@@ -71,7 +71,7 @@ export function tripDetail(dash,trip){
  '<p class="fine">Send this link to the truck owner. It lets them upload POD and vehicle documents, report a halt or request a payment. It does not show your purchase and sale rates.</p>'+
  '<div class="inline-actions">'+
  btn('Copy driver link','copy-driver-link','data-id="'+esc(trip.id)+'"','btn primary small')+
- (phone?'<a class="btn small" href="'+esc(whatsapp(phone,'V.R Logistics trip '+trip.id+' — submit updates, halts, payment requests and POD here: '+driverLink))+'" target="_blank" rel="noopener noreferrer">WhatsApp driver link ↗</a>':'')+
+ (phone?'<a class="btn small" href="'+esc(whatsapp(phone,'Setu Logistics trip '+trip.id+' — submit updates, halts, payment requests and POD here: '+driverLink))+'" target="_blank" rel="noopener noreferrer">WhatsApp driver link ↗</a>':'')+
  '</div><div class="info-strip" style="margin-top:12px;overflow-wrap:anywhere">'+esc(driverLink)+'</div>';
  const actions='<div class="divider"></div><h3 class="surface-subhead">Trip management</h3><div class="inline-actions">'+
  (next?btn('Next: '+labels[next],'trip-stage','data-id="'+esc(trip.id)+'" data-status="'+esc(next)+'"','btn primary small'):'<span class="status-pill">Trip closed</span>')+
@@ -105,7 +105,7 @@ export function fileForm(dash,{tripId='',truckId='',driver=false}={}){
  '<div class="form-actions"><button class="btn primary" type="submit">Upload document ↗</button></div></form>';
 }
 export function driverEntry(){
- return pageHeader('TRUCKER TRIP ACCESS','DRIVER <span>UPDATES.</span>','Use the private link given by V.R Logistics to report halts, request payments and upload delivery documents.')+
+ return pageHeader('TRUCKER TRIP ACCESS','DRIVER <span>UPDATES.</span>','Use the private link given by Setu Logistics to report halts, request payments and upload delivery documents.')+
  '<div class="container portal"><div class="surface" style="max-width:650px;margin:auto"><div class="surface-body">'+
  '<h2>Open your trip</h2><p class="fine">Enter your private trip code or use the link sent by the broker. Please do not share this access link publicly.</p>'+
  '<form id="driver-open-form"><div class="field"><label>Private trip access code</label><input name="token" required placeholder="Paste your trip code"></div><div class="form-actions"><button class="btn primary" type="submit">Open trip ↗</button></div></form>'+
@@ -122,7 +122,7 @@ export function driverView(data,token){
  '<div class="stat"><small>From</small><strong style="font-size:22px">'+esc(t.origin)+'</strong></div>'+
  '<div class="stat"><small>To</small><strong style="font-size:22px">'+esc(t.destination)+'</strong></div>'+
  '<div class="stat"><small>Loading date</small><strong style="font-size:22px">'+fmt(t.loadingDate)+'</strong></div></div>'+
- '<div class="two-pane"><div class="surface"><div class="surface-head"><div><h3>Submit a driver update</h3><p>Updates reach the V.R Logistics broker desk.</p></div></div>'+
+ '<div class="two-pane"><div class="surface"><div class="surface-head"><div><h3>Submit a driver update</h3><p>Updates reach the Setu Logistics broker desk.</p></div></div>'+
  '<div class="surface-body"><div class="feature-grid driver-actions">'+
  '<article class="feature-card"><div class="feature-icon">₹</div><h3>Payment request</h3><p>Request an advance or balance payment from the brokerage team.</p>'+btn('Request payment','driver-request','data-type="payment"','btn primary small')+'</article>'+
  '<article class="feature-card"><div class="feature-icon">⛟</div><h3>En-route halt</h3><p>Report a stoppage, breakdown, traffic delay or other issue with your location.</p>'+btn('Report halt','driver-request','data-type="halt"','btn primary small')+'</article>'+

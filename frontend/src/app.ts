@@ -1,3 +1,7 @@
+import {createElement} from 'react';
+import {createRoot} from 'react-dom/client';
+import {flushSync} from 'react-dom';
+import {Landing} from './Landing';
 import {api,esc,toast,copy,message,VEHICLE_PRESETS} from './lib.js';
 import {localize,setLanguage,getLanguage,t} from './i18n.js';
 import {home,formTruck,formLoad,findTrucks,selectTrucks,boardCards} from './public.js';
@@ -8,7 +12,7 @@ import {driverEntry,driverView,driverRequestForm,fileForm,tripDetail,paymentForm
 const pages=new Set(['home','find-trucks','find-loads','list-truck','post-load','broker','driver']);
 const app=document.querySelector('#app');
 const state={page:'home',board:null,config:null,dash:null,adminTab:'overview',search:'',body:'all',busy:false,modal:null,quoteLang:'en',driverToken:'',driver:null,loadSearch:'',loadBody:'all'};
-document.querySelector('#year').textContent=String(new Date().getFullYear());
+const pageRoot=createRoot(app);
 
 async function refreshBoard(silent=false){
  try{state.board=await api('public/board');if(state.page==='home'||state.page==='find-trucks'||state.page==='find-loads')render();}
@@ -17,19 +21,22 @@ async function refreshBoard(silent=false){
 async function getConfig(){
  try{state.config=await api('config');}catch{state.config={configured:false};}
 }
+let viewVersion=0;
 function render(){
- document.querySelectorAll('#nav [data-page]').forEach(a=>a.classList.toggle('active',a.dataset.page===state.page));
- document.querySelectorAll('.mobile-quick-nav [data-page]').forEach(a=>a.classList.toggle('active',a.dataset.page===state.page));
- if(state.page==='home')app.innerHTML=home(state.board)+(state.board===null?'<div class="container"><p class="safety-note">Live availability is not currently connected. The public board will refresh when the brokerage server is configured.</p></div>':'');
- if(state.page==='find-trucks')app.innerHTML=findTrucks(state.board,state.search,state.body)+(state.board===null?'<div class="container"><p class="setup-warning">Live truck data is currently unavailable. Please try again later.</p></div>':'');
- if(state.page==='find-loads')app.innerHTML=findLoads(state.board,state.loadSearch,state.loadBody)+(state.board===null?'<div class="container"><p class="setup-warning">Live freight requests are unavailable until the server is configured.</p></div>':'');
- if(state.page==='list-truck')app.innerHTML=formTruck();
- if(state.page==='post-load')app.innerHTML=formLoad();
- if(state.page==='broker')app.innerHTML=state.dash?brokerView(state.dash,state.adminTab):loginView(state.config||{});
- if(state.page==='driver')app.innerHTML=state.driverToken?driverView(state.driver,state.driverToken):driverEntry();
- localize(document.querySelector('#app'));
+ document.querySelectorAll<HTMLElement>('#nav [data-page]').forEach(a=>a.classList.toggle('active',a.dataset.page===state.page));
+ document.querySelectorAll<HTMLElement>('.mobile-quick-nav [data-page]').forEach(a=>a.classList.toggle('active',a.dataset.page===state.page));
+ let markup='';
+ if(state.page==='home')markup=home(state.board)+(state.board===null?'<div class="container"><p class="safety-note">Live availability is not currently connected. The public board will refresh when the brokerage server is configured.</p></div>':'');
+ if(state.page==='find-trucks')markup=findTrucks(state.board,state.search,state.body)+(state.board===null?'<div class="container"><p class="setup-warning">Live truck data is currently unavailable. Please try again later.</p></div>':'');
+ if(state.page==='find-loads')markup=findLoads(state.board,state.loadSearch,state.loadBody)+(state.board===null?'<div class="container"><p class="setup-warning">Live freight requests are unavailable until the server is configured.</p></div>':'');
+ if(state.page==='list-truck')markup=formTruck();
+ if(state.page==='post-load')markup=formLoad();
+ if(state.page==='broker')markup=state.dash?brokerView(state.dash,state.adminTab):loginView(state.config||{});
+ if(state.page==='driver')markup=state.driverToken?driverView(state.driver,state.driverToken):driverEntry();
+ flushSync(()=>pageRoot.render(createElement('div',{key:++viewVersion},state.page==='home'?createElement(Landing,{loads:state.board?.loads?.length||0,trucks:state.board?.trucks?.length||0,connected:!!state.board}):null,createElement('div',{dangerouslySetInnerHTML:{__html:markup}}))));
+ localize(app);
 }
-async function refreshAdmin(options={}){
+async function refreshAdmin(options:{silent?:boolean}={}){
  try{
   state.dash=await api('admin/dashboard');
   if(state.page==='broker')render();
@@ -52,7 +59,7 @@ async function navigate(){
  state.page=raw.startsWith('driver/')?'driver':pages.has(raw)?raw:'home';
  state.driverToken=state.page==='driver'&&raw.startsWith('driver/')?raw.slice(7):'';
  document.querySelector('#nav').classList.remove('open');
- document.querySelector('#menu-toggle').setAttribute('aria-expanded','false');
+ document.querySelector<HTMLButtonElement>('#menu-toggle').setAttribute('aria-expanded','false');
  if(state.page==='broker'){
   await getConfig();
   if(state.config?.configured)await refreshAdmin({silent:true});
@@ -74,12 +81,12 @@ async function refreshTrip(id){
  const trip=tripData(id);
  if(trip)modal('Manage shipment',id,tripDetail(state.dash,trip));
 }
-function openDocumentForm(opts={}){
+function openDocumentForm(opts:{driver?:boolean;tripId?:string;truckId?:string}={}){
  if(opts.driver)modal('Upload trip document','Private file upload: up to 3 MB.',fileForm(null,{driver:true}));
  else modal('Add a private document','Link the file to a trip or vehicle.',fileForm(state.dash,opts));
 }
 function readFileBase64(file){
- return new Promise((resolve,reject)=>{
+ return new Promise<string>((resolve,reject)=>{
   const reader=new FileReader();
   reader.onerror=()=>reject(Error('File could not be read.'));
   reader.onload=()=>resolve(String(reader.result).split(',')[1]||'');
@@ -93,7 +100,7 @@ async function submitDocument(form,driver=false){
  if(file.size>3*1024*1024)return toast('Maximum upload is 3 MB. Compress the photo or PDF before uploading.');
  if(!['image/jpeg','image/png','image/webp','application/pdf'].includes(file.type))return toast('Only JPEG, PNG, WebP or PDF files are supported.');
  const data=formValues(form);
- const body={kind:data.kind,name:file.name,mime:file.type,base64:await readFileBase64(file)};
+ const body:Record<string,string>={kind:data.kind,name:file.name,mime:file.type,base64:await readFileBase64(file)};
  if(!driver){
   if(!data.record)return toast('Choose a trip or truck.');
   if(data.record.startsWith('trip:'))body.tripId=data.record.slice(5);
@@ -157,7 +164,7 @@ async function submitDriverRequest(form){
 let dialogOpener=null;
 function modal(title,subtitle,body,footer='',narrow=false){
  if(!state.modal)dialogOpener=document.activeElement;
- document.querySelector('.site-wrap').inert=true;
+ document.querySelector<HTMLElement>('.site-wrap').inert=true;
  state.modal=title;
  document.querySelector('#modal-root').innerHTML=
   '<div class="modal-backdrop" data-backdrop="1"><section class="modal '+(narrow?'narrow':'')+'" role="dialog" aria-modal="true" aria-label="'+esc(title)+'">'+
@@ -165,22 +172,20 @@ function modal(title,subtitle,body,footer='',narrow=false){
   '<div class="modal-body">'+body+'</div>'+
   (footer?'<div class="modal-foot">'+footer+'</div>':'')+'</section></div>';
  localize(document.querySelector('#modal-root'));
- document.querySelector('.close-modal').focus({preventScroll:true});
+ document.querySelector<HTMLButtonElement>('.close-modal').focus({preventScroll:true});
 }
 function closeModal(){
  state.modal=null;
  document.querySelector('#modal-root').replaceChildren();
- document.querySelector('.site-wrap').inert=false;
+ document.querySelector<HTMLElement>('.site-wrap').inert=false;
  if(dialogOpener?.isConnected)dialogOpener.focus({preventScroll:true});
  dialogOpener=null;
 }
 function loadData(id){return state.dash?.loads.find(x=>x.id===id)}
 function truckData(id){return state.dash?.trucks.find(x=>x.id===id)}
 function quoteData(id){return state.dash?.quotes.find(x=>x.id===id)}
-function formValues(form){
- const data=Object.fromEntries(new FormData(form).entries());
- for(const k in data)if(typeof data[k]==='string')data[k]=data[k].trim();
- return data;
+function formValues(form:HTMLFormElement):Record<string,string>{
+ return Object.fromEntries(Array.from(new FormData(form),([key,value])=>[key,String(value).trim()]));
 }
 function setFormBusy(form,isBusy){
  if(!form)return;
@@ -195,7 +200,7 @@ async function submitPublic(type,form){
   const target=document.querySelector(type==='truck'?'#truck-form-area':'#load-form-area');
   const reference=esc(result.reference);
   target.innerHTML=message(type==='truck'?'Truck availability submitted.':'Load requirement submitted.',
-   'Your reference: <strong>'+reference+'</strong>. The V.R Logistics desk can now review it. Submission is not a confirmed booking.')+
+   'Your reference: <strong>'+reference+'</strong>. The Setu Logistics desk can now review it. Submission is not a confirmed booking.')+
     '<div class="form-actions"><a class="btn" href="#home" data-page="home">Back to home ↗</a><a class="btn primary" data-new-submission href="#'+(type==='truck'?'list-truck':'post-load')+'" data-page="'+(type==='truck'?'list-truck':'post-load')+'">Submit another ↗</a></div>';
   localize(target);
   toast('Reference '+result.reference+' saved.');
@@ -219,7 +224,7 @@ async function submitLoadApplication(form){
  try{
   const result=await api('public/applications',{method:'POST',body:JSON.stringify(body)});
   modal('Application received',result.reference,
-   message('Your truck application was sent.','Reference: <strong>'+esc(result.reference)+'</strong>. V.R Logistics will review your vehicle and contact you before any booking is confirmed.')+
+   message('Your truck application was sent.','Reference: <strong>'+esc(result.reference)+'</strong>. Setu Logistics will review your vehicle and contact you before any booking is confirmed.')+
    '<p class="fine" style="margin-top:16px">Please keep this reference number. You can also call the dispatch desk at <a class="call-number" href="tel:+917738103505">+91 7738103505</a>.</p>',
    '<button class="btn primary" data-action="close-modal">Back to available loads</button>',true);
   toast('Application '+result.reference+' received.');
@@ -257,7 +262,7 @@ function share(id,lang=null){
  if(!q||!l||!t){toast('Quotation record is unavailable.');return;}
  if(lang===null)state.quoteLang=getLanguage();
  else state.quoteLang=lang==='hi'?'hi':'en';
- modal('Share customer quotation',q.id+' · V.R Logistics',shareQuote(q,l,t,state.quoteLang));
+ modal('Share customer quotation',q.id+' · Setu Logistics',shareQuote(q,l,t,state.quoteLang));
 }
 async function submitQuote(form){
  if(!state.dash)return;
@@ -285,21 +290,22 @@ async function logout(){
  state.dash=null;closeModal();render();toast('Signed out.');
 }
 document.addEventListener('click',async e=>{
- const languageButton=e.target.closest('.language-switch [data-lang]');
+ if(!(e.target instanceof Element))return;
+ const languageButton=e.target.closest<HTMLElement>('.language-switch [data-lang]');
  if(languageButton){
   setLanguage(languageButton.dataset.lang);
   localize(document.body);
   return;
  }
- const pageLink=e.target.closest('[data-page]');
+ const pageLink=e.target.closest<HTMLAnchorElement>('[data-page]');
  if(pageLink && pageLink.hash===location.hash){
   e.preventDefault();
   if(pageLink.hasAttribute('data-new-submission'))render();
   document.querySelector('#nav').classList.remove('open');
-  document.querySelector('#menu-toggle').setAttribute('aria-expanded','false');
+  document.querySelector<HTMLButtonElement>('#menu-toggle').setAttribute('aria-expanded','false');
   window.scrollTo({top:0,behavior:'auto'});
  }
- const btn=e.target.closest('[data-action]');
+ const btn=e.target.closest<HTMLElement>('[data-action]');
  if(!btn){
   if(e.target.matches('[data-backdrop]'))closeModal();
   return;
@@ -340,7 +346,7 @@ document.addEventListener('click',async e=>{
  if(action==='driver-file'){openDocumentForm({driver:true});return;}
  if(action==='driver-request'){
   const type=btn.dataset.type;
-  modal(type==='halt'?'Report an en-route halt':'Request a freight payment','Submit to the V.R Logistics dispatcher.',driverRequestForm(type));
+  modal(type==='halt'?'Report an en-route halt':'Request a freight payment','Submit to the Setu Logistics dispatcher.',driverRequestForm(type));
   return;
  }
  if(action==='logout'){await logout();return;}
@@ -350,7 +356,7 @@ document.addEventListener('click',async e=>{
    const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
    const uri=URL.createObjectURL(blob);
    const anchor=document.createElement('a');
-   anchor.href=uri;anchor.download='vr-logistics-backup-'+new Date().toISOString().slice(0,10)+'.json';
+   anchor.href=uri;anchor.download='setu-logistics-backup-'+new Date().toISOString().slice(0,10)+'.json';
    document.body.appendChild(anchor);anchor.click();anchor.remove();
    setTimeout(()=>URL.revokeObjectURL(uri),1200);
    toast('Confidential brokerage data exported. Store it securely.');
@@ -410,6 +416,7 @@ document.addEventListener('click',async e=>{
 });
 document.addEventListener('submit',async e=>{
  const form=e.target;
+ if(!(form instanceof HTMLFormElement))return;
  if(!['truck-form','load-form','login-form','quote-form','driver-open-form','driver-request-form','driver-file-form','broker-file-form','trip-payment-form','load-application-form'].includes(form.id))return;
  e.preventDefault();
  if(!form.reportValidity())return;
@@ -439,6 +446,7 @@ function updateTruckResults(){
  localize(count);
 }
 document.addEventListener('input',e=>{
+ if(!(e.target instanceof HTMLInputElement))return;
  if(e.target.id==='load-search'){
   state.loadSearch=e.target.value;
   const results=selectLoads(state.board,state.loadSearch,state.loadBody);
@@ -453,15 +461,17 @@ document.addEventListener('input',e=>{
  }
 });
 document.addEventListener('change',e=>{
+ if(!(e.target instanceof HTMLSelectElement))return;
+ const target=e.target;
  if(e.target.name==='vehicleClass'){
   const form=e.target.closest('form');
-  const preset=VEHICLE_PRESETS.find(p=>p.id===e.target.value);
+  const preset=VEHICLE_PRESETS.find(p=>p.id===target.value);
   if(form&&preset?.feet){
-    const feet=form.querySelector('[name="feet"]');
+    const feet=form.querySelector<HTMLInputElement>('[name="feet"]');
     if(feet)feet.value=String(preset.feet);
     // A customer's cargo weight is different from a truck's payload rating; do not auto-fill it.
     if(form.id==='truck-form'||form.id==='load-application-form'){
-      const payload=form.querySelector('[name="capacityMt"]');
+      const payload=form.querySelector<HTMLInputElement>('[name="capacityMt"]');
       if(payload)payload.value=String(preset.capacityMt);
     }
   }
@@ -479,10 +489,10 @@ document.addEventListener('change',e=>{
   state.body=e.target.value;updateTruckResults();
  }
 });
-document.querySelector('#menu-toggle').addEventListener('click',()=>{
+document.querySelector<HTMLButtonElement>('#menu-toggle').addEventListener('click',()=>{
  const nav=document.querySelector('#nav');
  nav.classList.toggle('open');
- document.querySelector('#menu-toggle').setAttribute('aria-expanded',String(nav.classList.contains('open')));
+ document.querySelector<HTMLButtonElement>('#menu-toggle').setAttribute('aria-expanded',String(nav.classList.contains('open')));
 });
 document.addEventListener('keydown',e=>{
  if(e.key!=='Escape')return;
@@ -490,7 +500,7 @@ document.addEventListener('keydown',e=>{
  const nav=document.querySelector('#nav');
  if(nav.classList.contains('open')){
   nav.classList.remove('open');
-  const toggle=document.querySelector('#menu-toggle');
+  const toggle=document.querySelector<HTMLButtonElement>('#menu-toggle');
   toggle.setAttribute('aria-expanded','false');
   toggle.focus();
  }

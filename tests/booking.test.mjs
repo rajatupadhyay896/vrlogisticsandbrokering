@@ -1,25 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {randomBytes} from 'node:crypto';
-import {serve} from '../netlify/functions/freight.mjs';
+const base=process.env.TEST_API;
+if(!base || new URL(base).hostname!=='127.0.0.1')throw Error('Set TEST_API to a disposable loopback Spring Boot instance');
 
-test('Python function handles a booking from enquiry through POD and final settlement',async()=>{
-  const db=new Map();
-  let revision=0;
-  const storage={
-    async getWithMetadata(key){return db.has(key)?{data:structuredClone(db.get(key)),etag:String(revision)}:null;},
-    async setJSON(key,value,options){
-      if(options.onlyIfNew?db.has(key):options.onlyIfMatch!==String(revision))return {modified:false};
-      db.set(key,value); revision++; return {modified:true};
-    },
-    async get(key){return db.get(key);},async set(key,value){db.set(key,value);},async delete(key){db.delete(key);}
-  };
-  const env={BROKER_ADMIN_PASSWORD:randomBytes(18).toString('hex'),BROKER_SESSION_SECRET:randomBytes(32).toString('hex')};
+test('Spring Boot with PostgreSQL handles a booking from enquiry through POD and final settlement',async()=>{
+  const env={BROKER_ADMIN_PASSWORD:process.env.BROKER_ADMIN_PASSWORD};
   let cookie='';
   async function call(method,path,body,status=200){
-    const req=new Request('https://test.invalid/api/freight/'+path,{method,headers:{'Content-Type':'application/json',cookie},
+    const req=new Request(base+'/api/freight/'+path,{method,headers:{'Content-Type':'application/json',cookie},
       body:body===undefined?undefined:JSON.stringify(body)});
-    const res=await serve(req,()=>storage,env);
+    const res=await fetch(req);
     const result=res.headers.get('content-type').startsWith('application/json')?await res.json():await res.text();
     assert.equal(res.status,status,method+' '+path+' '+JSON.stringify(result));
     if(res.headers.has('set-cookie'))cookie=res.headers.get('set-cookie').split(';')[0];

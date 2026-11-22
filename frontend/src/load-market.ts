@@ -13,7 +13,7 @@ export function selectLoads(board,query='',body='all'){
 
 export function loadCards(loads,limit=0){
   const items=limit?loads.slice(0,limit):loads;
-  if(!items.length)return '<div class="surface"><div class="empty"><span class="empty-icon">▤</span><strong>No loads listed at the moment</strong><p>New transport requirements will appear here. You can still list your vehicle so V.R Logistics can reach you.</p><a href="#list-truck" class="btn primary" data-page="list-truck">List your vehicle ↗</a></div></div>';
+  if(!items.length)return '<div class="surface"><div class="empty"><span class="empty-icon">▤</span><strong>No loads listed at the moment</strong><p>New transport requirements will appear here. You can still list your vehicle so Setu Logistics can reach you.</p><a href="#list-truck" class="btn primary" data-page="list-truck">List your vehicle ↗</a></div></div>';
   return '<div class="listing-grid load-market-grid">'+items.map(l=>`<article class="listing load-card">
     <div class="listing-top"><span class="listing-id">${esc(l.id)}</span><span class="status-pill">Open for applications</span></div>
     <div class="load-card-lane"><span>${esc(l.origin)}</span><span class="lane-arrow" aria-hidden="true">→</span><span>${esc(l.destination)}</span></div>
@@ -26,13 +26,13 @@ export function loadCards(loads,limit=0){
 
 export function findLoads(board,query='',body='all'){
   const loads=selectLoads(board,query,body);
-  return pageHeader('FOR TRUCK OWNERS','FIND A <span>LOAD.</span>','Browse current customer freight requirements and apply with your available vehicle. V.R Logistics reviews applications before confirming a trip.')+
+  return pageHeader('FOR TRUCK OWNERS','FIND A <span>LOAD.</span>','Browse current customer freight requirements and apply with your available vehicle. Setu Logistics reviews applications before confirming a trip.')+
     '<div class="container portal"><div class="surface" style="margin-bottom:20px"><div class="filter-bar mobile-load-filters">'+
     '<label class="market-search"><span>Search loads by location, material or size</span><input type="search" id="load-search" placeholder="e.g. Mumbai, Pune, steel, 32 ft" value="'+esc(query)+'" autocomplete="off" aria-label="Search available freight loads"></label>'+
     '<label class="market-filter"><span>Vehicle body</span><select id="load-body-filter" aria-label="Filter loads by vehicle body">'+bodyOptions.map(([v,t])=>'<option value="'+esc(v)+'" '+(v===body?'selected':'')+'>'+esc(t)+'</option>').join('')+'</select></label>'+
     '<div class="filter-note" id="load-count" aria-live="polite">'+loads.length+' available load(s)</div></div></div>'+
     '<div id="load-results">'+loadCards(loads)+'</div>'+
-    '<p class="fine" style="margin-top:23px">Loads are customer-submitted. Availability, routing, freight rate and vehicle suitability must be confirmed by V.R Logistics before dispatch.</p></div>';
+    '<p class="fine" style="margin-top:23px">Loads are customer-submitted. Availability, routing, freight rate and vehicle suitability must be confirmed by Setu Logistics before dispatch.</p></div>';
 }
 
 export function applicationForm(load){
@@ -51,7 +51,7 @@ export function applicationForm(load){
     field('Vehicle registration (optional)','vehicleNo',{placeholder:'e.g. MH 04 XX 1234'})+
     field('Message to broker (optional)','notes',{textarea:true,full:true,placeholder:'Mention availability, special conditions or a preferred freight rate.'})+
     '<div class="field full" style="display:none" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>'+
-    '<div class="field full checkbox-field"><input type="checkbox" id="application-consent" name="consent" value="yes" required><label for="application-consent">I am authorised to offer this vehicle. I agree that V.R Logistics may contact me about this load. My phone number will not be shown publicly.</label></div>'+
-   '</div><p class="fine">Submitting an application does not reserve the load or confirm any freight payment. V.R Logistics will contact you after reviewing your details.</p>'+
+    '<div class="field full checkbox-field"><input type="checkbox" id="application-consent" name="consent" value="yes" required><label for="application-consent">I am authorised to offer this vehicle. I agree that Setu Logistics may contact me about this load. My phone number will not be shown publicly.</label></div>'+
+   '</div><p class="fine">Submitting an application does not reserve the load or confirm any freight payment. Setu Logistics will contact you after reviewing your details.</p>'+
    '<div class="form-actions"><button class="btn primary" type="submit">Send application ↗</button></div></form>';
 }

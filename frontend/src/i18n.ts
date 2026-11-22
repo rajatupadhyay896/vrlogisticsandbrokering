@@ -1,5 +1,8 @@
-/* V.R Logistics bilingual interface. Static English source remains the canonical UI and data schema. */
+/* Setu Logistics bilingual interface. Static English source remains the canonical UI and data schema. */
 const translations = {
+  "Road freight bookings":"सड़क माल ढुलाई की बुकिंग",
+  "Open loads":"उपलब्ध लोड",
+  "Request a truck for your shipment or find a load for your vehicle. Our freight desk coordinates the rate, placement and delivery paperwork.":"अपना माल भेजने के लिए ट्रक माँगें या अपने ट्रक के लिए लोड खोजें। हमारी टीम भाड़ा, गाड़ी की व्यवस्था और डिलीवरी के दस्तावेज़ संभालती है।",
   "Home":"होम",
   "Find trucks":"ट्रक खोजें",
   "List your truck":"अपना ट्रक दर्ज करें",
@@ -33,7 +36,7 @@ const translations = {
   "Truck owners list available feet, payload capacity, preferred location and ready dates.":"ट्रक मालिक गाड़ी की लंबाई, टन क्षमता, अभी की जगह और उपलब्ध होने की तारीख दर्ज करें।",
   "For truck owners":"ट्रक मालिकों के लिए",
   "Get a quotation":"भाड़े का कोटेशन पाएँ",
-  "V.R Logistics reviews suitable trucks and shares freight quotations by email, phone or WhatsApp.":"V.R Logistics सही ट्रक देखकर ईमेल, फोन या WhatsApp पर भाड़े का कोटेशन भेजेगा।",
+  "Setu Logistics reviews suitable trucks and shares freight quotations by email, phone or WhatsApp.":"Setu Logistics सही ट्रक देखकर ईमेल, फोन या WhatsApp पर भाड़े का कोटेशन भेजेगा।",
   "See availability":"उपलब्ध ट्रक देखें",
   "KEEP YOUR FREIGHT MOVING":"माल की ढुलाई आसान बनाएँ",
   "HAVE MATERIAL TO DISPATCH?":"क्या माल भेजना है?",
@@ -43,13 +46,13 @@ const translations = {
   "TRUCKS":"ट्रक",
   "READY TO MOVE.":"चलने को तैयार।",
   "Explore truck board":"ट्रक की सूची देखें",
-  "Availability is owner-submitted and remains subject to individual verification by V.R Logistics.":"ट्रक की उपलब्धता मालिक स्वयं बताता है। V.R Logistics से पुष्टि करना आवश्यक है।",
+  "Availability is owner-submitted and remains subject to individual verification by Setu Logistics.":"ट्रक की उपलब्धता मालिक स्वयं बताता है। Setu Logistics से पुष्टि करना आवश्यक है।",
   "FOR TRUCK OWNERS":"ट्रक मालिकों के लिए",
   "LIST YOUR":"अपना",
   "VEHICLE.":"ट्रक दर्ज करें।",
   "Tell us which truck is ready, where it is, and how much cargo it can carry. No account required to submit an availability request.":"कौन-सा ट्रक खाली है, अभी कहाँ है और कितने मीट्रिक टन माल ले जा सकता है, इसकी जानकारी दें। रिक्वेस्ट भेजने के लिए अकाउंट बनाना ज़रूरी नहीं है।",
   "Available truck details":"उपलब्ध ट्रक की जानकारी",
-  "Truck owner registration · V.R Logistics network":"ट्रक मालिक रजिस्ट्रेशन · V.R Logistics नेटवर्क",
+  "Truck owner registration · Setu Logistics network":"ट्रक मालिक रजिस्ट्रेशन · Setu Logistics नेटवर्क",
   "Open for listings":"ट्रक दर्ज कर सकते हैं",
   "Business / fleet name":"कंपनी / ट्रक मालिक का नाम",
   "Contact person":"संपर्क करने वाले का नाम",
@@ -84,7 +87,7 @@ const translations = {
   "Closed body / container":"बंद बॉडी / कंटेनर",
   "Flatbed / trailer":"फ्लैटबेड / ट्रेलर",
   "Other / special":"अन्य / विशेष",
-  "I confirm I am authorised to share this vehicle's availability and consent to V.R Logistics contacting me about freight opportunities. My direct contact details will not appear on the public truck board.":"मैं इस गाड़ी की उपलब्धता बताने के लिए अधिकृत हूँ। V.R Logistics मुझसे माल ढुलाई के लिए संपर्क कर सकता है। मेरा मोबाइल नंबर सार्वजनिक सूची में नहीं दिखाया जाएगा।",
+  "I confirm I am authorised to share this vehicle's availability and consent to Setu Logistics contacting me about freight opportunities. My direct contact details will not appear on the public truck board.":"मैं इस गाड़ी की उपलब्धता बताने के लिए अधिकृत हूँ। Setu Logistics मुझसे माल ढुलाई के लिए संपर्क कर सकता है। मेरा मोबाइल नंबर सार्वजनिक सूची में नहीं दिखाया जाएगा।",
   "Publish vehicle availability":"ट्रक की उपलब्धता भेजें",
   "You’ll receive a submission reference on screen.":"रिक्वेस्ट नंबर स्क्रीन पर मिलेगा।",
   "HOW IT WORKS":"कैसे काम करेगा?",
@@ -97,7 +100,7 @@ const translations = {
   "You decide whether to accept a proposed route and truck freight.":"रूट और भाड़ा मंज़ूर करना आपके हाथ में है।",
   "No public phone numbers":"मोबाइल नंबर गोपनीय",
   "Only the brokerage team receives your contact information.":"संपर्क की जानकारी सिर्फ़ ब्रोकर टीम को मिलेगी।",
-  "V.R Logistics confirms rates and truck placements individually. Submitting information does not guarantee a booking or create a binding quotation.":"V.R Logistics हर गाड़ी और भाड़े की अलग से पुष्टि करेगा। जानकारी भेजने से बुकिंग पक्की नहीं होती।",
+  "Setu Logistics confirms rates and truck placements individually. Submitting information does not guarantee a booking or create a binding quotation.":"Setu Logistics हर गाड़ी और भाड़े की अलग से पुष्टि करेगा। जानकारी भेजने से बुकिंग पक्की नहीं होती।",
   "FOR TRANSPORTERS":"ट्रांसपोर्टरों के लिए",
   "POST YOUR":"अपने माल की",
   "LOAD.":"रिक्वेस्ट भेजें।",
@@ -117,7 +120,7 @@ const translations = {
   "e.g. Vadodara, Gujarat":"जैसे वडोदरा, गुजरात",
   "e.g. Steel coils, packaged FMCG":"जैसे स्टील, सीमेंट, पैक किया माल",
   "e.g. forklift required, side loading, open 32 ft MXL preferred":"जैसे फोर्कलिफ्ट चाहिए, साइड लोडिंग, 32 फीट MXL ओपन",
-  "I am authorised to submit this cargo requirement and consent to being contacted by the V.R Logistics brokerage team. I understand that submitted requests are not confirmed bookings.":"मुझे इस माल की रिक्वेस्ट भेजने का अधिकार है। V.R Logistics टीम मुझसे संपर्क कर सकती है। मैं समझता/समझती हूँ कि रिक्वेस्ट भेजने से बुकिंग पक्की नहीं होती।",
+  "I am authorised to submit this cargo requirement and consent to being contacted by the Setu Logistics brokerage team. I understand that submitted requests are not confirmed bookings.":"मुझे इस माल की रिक्वेस्ट भेजने का अधिकार है। Setu Logistics टीम मुझसे संपर्क कर सकती है। मैं समझता/समझती हूँ कि रिक्वेस्ट भेजने से बुकिंग पक्की नहीं होती।",
   "Request freight quotation":"भाड़े का कोटेशन माँगें",
   "No payment is taken online.":"वेबसाइट पर कोई ऑनलाइन भुगतान नहीं लिया जाता।",
   "WHAT HAPPENS NEXT?":"इसके बाद क्या होगा?",
@@ -133,7 +136,7 @@ const translations = {
   "LIVE NETWORK AVAILABILITY":"लाइव ट्रक उपलब्धता",
   "FIND AN":"खोजें",
   "AVAILABLE TRUCK.":"उपलब्ध ट्रक।",
-  "Browse truck owners’ publicly listed availability. Contact information and vehicle registration are private to the V.R Logistics brokerage team.":"यहाँ उपलब्ध ट्रक देखें। मालिक का मोबाइल नंबर और गाड़ी का रजिस्ट्रेशन केवल V.R Logistics टीम को दिखाई देगा।",
+  "Browse truck owners’ publicly listed availability. Contact information and vehicle registration are private to the Setu Logistics brokerage team.":"यहाँ उपलब्ध ट्रक देखें। मालिक का मोबाइल नंबर और गाड़ी का रजिस्ट्रेशन केवल Setu Logistics टीम को दिखाई देगा।",
   "Search origin, destination, length, MT…":"जगह, मंज़िल, फीट या टन से खोजें…",
   "All vehicle types":"सभी प्रकार के ट्रक",
   "Contact broker for confirmation":"पुष्टि के लिए ब्रोकर से संपर्क करें",
@@ -159,7 +162,7 @@ const translations = {
   "Truck availability submitted.":"ट्रक की उपलब्धता दर्ज हो गई।",
   "Load requirement submitted.":"माल की रिक्वेस्ट दर्ज हो गई।",
   "Your reference:":"आपका रिक्वेस्ट नंबर:",
-  "The V.R Logistics desk can now review it. Submission is not a confirmed booking.":"V.R Logistics टीम अब इसे देखेगी। अभी बुकिंग पक्की नहीं हुई है।",
+  "The Setu Logistics desk can now review it. Submission is not a confirmed booking.":"Setu Logistics टीम अब इसे देखेगी। अभी बुकिंग पक्की नहीं हुई है।",
   "Live availability is not currently connected. The public board will refresh when the brokerage server is configured.":"लाइव ट्रक सूची अभी कनेक्ट नहीं है। सर्वर तैयार होने पर यहाँ उपलब्ध ट्रक दिखेंगे।",
   "Live truck data is currently unavailable. Please try again later.":"ट्रक की लाइव सूची अभी उपलब्ध नहीं है। कृपया बाद में फिर प्रयास करें।",
   "PRIVATE BROKER CONTROL CENTER":"निजी ब्रोकर कंट्रोल सेंटर",
@@ -173,9 +176,9 @@ const translations = {
   "Enter private broker password":"गोपनीय पासवर्ड लिखें",
   "Unlock broker desk":"ब्रोकर डेस्क खोलें",
   "Server setup required.":"सर्वर सेटअप ज़रूरी है।",
-  "V.R Logistics does not publish trucker or customer phone numbers on the public site. Every actual quote is reviewed by a broker before sharing.":"V.R Logistics ग्राहक या ट्रक मालिक का नंबर सार्वजनिक नहीं दिखाता। हर कोटेशन भेजने से पहले ब्रोकर उसे देखता है।",
+  "Setu Logistics does not publish trucker or customer phone numbers on the public site. Every actual quote is reviewed by a broker before sharing.":"Setu Logistics ग्राहक या ट्रक मालिक का नंबर सार्वजनिक नहीं दिखाता। हर कोटेशन भेजने से पहले ब्रोकर उसे देखता है।",
   "Request failed.":"रिक्वेस्ट पूरी नहीं हो सकी।",
-  "Cannot connect to the V.R Logistics server. Check deployment and internet access.":"V.R Logistics सर्वर से संपर्क नहीं हो पा रहा। इंटरनेट और सर्वर जाँचें।",
+  "Cannot connect to the Setu Logistics server. Check deployment and internet access.":"Setu Logistics सर्वर से संपर्क नहीं हो पा रहा। इंटरनेट और सर्वर जाँचें।",
   "Server returned an unexpected response.":"सर्वर से सही जवाब नहीं मिला।",
   "Incorrect password.":"पासवर्ड गलत है।",
   "Sign in to access brokerage records.":"ब्रोकर रिकॉर्ड देखने के लिए लॉगिन करें।",
@@ -186,7 +189,7 @@ const translations = {
   "Provide a valid availability date range.":"ट्रक की उपलब्धता की सही तारीख दें।",
   "Invalid vehicle registration.":"गाड़ी नंबर सही नहीं है।",
   "Enter valid origin, destination, material, loading date, vehicle feet (8–65) and weight (0.1–70 MT).":"सही लोडिंग जगह, अनलोडिंग जगह, माल, तारीख, ट्रक की लंबाई (8–65 फीट) और वजन (0.1–70 मीट्रिक टन) भरें।",
-  "Server not configured. Set BROKER_ADMIN_PASSWORD (12+ characters) and BROKER_SESSION_SECRET (32+ characters) on the hosting server.":"सर्वर अभी सेटअप नहीं है। वेबसाइट के प्रबंधक को निजी पासवर्ड और सर्वर सीक्रेट सेट करना होगा।",
+  "Configure BROKER_ADMIN_PASSWORD (at least 12 characters).":"सर्वर पर ब्रोकर का पासवर्ड सेट करना बाकी है।",
   "Request too large.":"रिक्वेस्ट बहुत बड़ी है।",
   "Malformed JSON.":"भेजी गई जानकारी का फ़ॉर्मैट सही नहीं है।",
   "Unexpected server error.":"सर्वर में समस्या आई है। कृपया फिर कोशिश करें।",
@@ -208,7 +211,7 @@ Object.assign(translations,{
   "Sub-broker":"दूसरा ब्रोकर",
   "Waiting for owner":"मालिक का इंतज़ार",
   "Verification pending":"जाँच बाकी है",
-  "V.R":"V.R",
+  "SETU":"सेतु",
   "OPERATIONS.":"ऑपरेशन्स।",
   "Your incoming customer demand, owner fleet availability, matches and quotations—under one private login.":"ग्राहकों की माँग, ट्रक मालिकों की उपलब्धता, गाड़ी मिलान और कोटेशन एक सुरक्षित लॉगिन में देखें।",
   "Broker command center":"ब्रोकर कंट्रोल सेंटर",
@@ -346,12 +349,11 @@ Object.assign(translations,{
   "Clipboard blocked. Use email or WhatsApp draft instead.":"कॉपी नहीं हो पाया। ईमेल या WhatsApp ड्राफ्ट इस्तेमाल करें।",
   "Quotation record is unavailable.":"कोटेशन रिकॉर्ड उपलब्ध नहीं है।",
   "Status updated:":"स्थिति बदल गई:",
-  "Reference":"रिक्वेस्ट नंबर"
 });
 
 Object.assign(translations,{
   "Driver updates": "ड्राइवर अपडेट",
-  "Call V.R Logistics:": "V.R Logistics को कॉल करें:",
+  "Call Setu Logistics:": "Setu Logistics को कॉल करें:",
   "Live trips": "चल रही ट्रिप",
   "Driver requests": "ड्राइवर की रिक्वेस्ट",
   "Documents": "दस्तावेज़",
@@ -395,7 +397,7 @@ Object.assign(translations,{
   "TRUCKER TRIP ACCESS": "ट्रक ड्राइवर ट्रिप एक्सेस",
   "DRIVER": "ड्राइवर",
   "UPDATES.": "अपडेट",
-  "Use the private link given by V.R Logistics to report halts, request payments and upload delivery documents.": "V.R Logistics से मिला निजी लिंक खोलकर रुकने की जानकारी, पेमेंट रिक्वेस्ट या POD भेजें।",
+  "Use the private link given by Setu Logistics to report halts, request payments and upload delivery documents.": "Setu Logistics से मिला निजी लिंक खोलकर रुकने की जानकारी, पेमेंट रिक्वेस्ट या POD भेजें।",
   "Open your trip": "अपनी ट्रिप खोलें",
   "Enter your private trip code or use the link sent by the broker. Please do not share this access link publicly.": "ब्रोकर से मिला निजी ट्रिप कोड डालें या भेजा गया लिंक खोलें। यह कोड सार्वजनिक रूप से साझा न करें।",
   "Private trip access code": "निजी ट्रिप कोड",
@@ -406,7 +408,7 @@ Object.assign(translations,{
   "Current status": "मौजूदा स्थिति",
   "Loading date": "लोडिंग की तारीख",
   "Submit a driver update": "ड्राइवर अपडेट भेजें",
-  "Updates reach the V.R Logistics broker desk.": "यह जानकारी V.R Logistics ब्रोकर डेस्क को मिलेगी।",
+  "Updates reach the Setu Logistics broker desk.": "यह जानकारी Setu Logistics ब्रोकर डेस्क को मिलेगी।",
   "Request payment": "पेमेंट माँगें",
   "Report halt": "रुकने की जानकारी भेजें",
   "Upload evidence": "दस्तावेज़ अपलोड करें",
@@ -493,7 +495,7 @@ Object.assign(translations,{
   "FOR TRUCK OWNERS": "ट्रक मालिकों के लिए",
   "AVAILABLE": "उपलब्ध",
   "LOADS TO CARRY.": "ढुलाई के लिए माल",
-  "Browse current customer freight requirements and apply with your available vehicle. V.R Logistics reviews applications before confirming a trip.": "ग्राहक के उपलब्ध माल और रूट की जानकारी देखें। अपनी गाड़ी से काम लेने के लिए आवेदन भेजें। अंतिम बुकिंग V.R Logistics तय करेगी।",
+  "Browse current customer freight requirements and apply with your available vehicle. Setu Logistics reviews applications before confirming a trip.": "ग्राहक के उपलब्ध माल और रूट की जानकारी देखें। अपनी गाड़ी से काम लेने के लिए आवेदन भेजें। अंतिम बुकिंग Setu Logistics तय करेगी।",
   "FIND A": "ढुलाई के लिए",
   "LOAD.": "माल खोजें",
   "Available loads": "उपलब्ध माल",
@@ -504,13 +506,13 @@ Object.assign(translations,{
   "Filter loads by vehicle body": "गाड़ी के प्रकार से माल छाँटें",
   "All body types": "सभी बॉडी प्रकार",
   "No loads listed at the moment": "इस समय कोई माल उपलब्ध नहीं है",
-  "New transport requirements will appear here. You can still list your vehicle so V.R Logistics can reach you.": "ग्राहक का नया माल आएगा तो यहाँ दिखेगा। आप अपनी गाड़ी की उपलब्धता भी दर्ज कर सकते हैं।",
+  "New transport requirements will appear here. You can still list your vehicle so Setu Logistics can reach you.": "ग्राहक का नया माल आएगा तो यहाँ दिखेगा। आप अपनी गाड़ी की उपलब्धता भी दर्ज कर सकते हैं।",
   "Open for applications": "गाड़ी के आवेदन खुले हैं",
   "Apply for load": "माल के लिए आवेदन करें",
   "Loading": "लोडिंग",
   "Customer contact details are private.": "ग्राहक का नंबर निजी रखा गया है।",
   "Booking and freight rate are confirmed by the broker. Customer contact details are private.": "बुकिंग और भाड़ा ब्रोकर से पुष्टि के बाद तय होगा। ग्राहक का नंबर निजी है।",
-  "Loads are customer-submitted. Availability, routing, freight rate and vehicle suitability must be confirmed by V.R Logistics before dispatch.": "ग्राहक स्वयं माल की जानकारी देता है। भेजने से पहले V.R Logistics गाड़ी, रूट और भाड़े की पुष्टि करेगी।",
+  "Loads are customer-submitted. Availability, routing, freight rate and vehicle suitability must be confirmed by Setu Logistics before dispatch.": "ग्राहक स्वयं माल की जानकारी देता है। भेजने से पहले Setu Logistics गाड़ी, रूट और भाड़े की पुष्टि करेगी।",
   "Apply for available load": "उपलब्ध माल के लिए आवेदन",
   "Your vehicle category": "आपकी गाड़ी का प्रकार",
   "Choose a suggested vehicle type, then check the actual length and carrying capacity.": "गाड़ी का प्रकार चुनें। फिर सही लंबाई और टन क्षमता देखकर भरें।",
@@ -523,8 +525,8 @@ Object.assign(translations,{
   "Vehicle registration (optional)": "गाड़ी नंबर (वैकल्पिक)",
   "Message to broker (optional)": "ब्रोकर को संदेश (वैकल्पिक)",
   "Mention availability, special conditions or a preferred freight rate.": "आपकी उपलब्धता, शर्तें या पसंद का भाड़ा लिखें।",
-  "I am authorised to offer this vehicle. I agree that V.R Logistics may contact me about this load. My phone number will not be shown publicly.": "मैं इस गाड़ी के लिए आवेदन करने के लिए अधिकृत हूँ। V.R Logistics मुझसे संपर्क कर सकती है। मेरा मोबाइल नंबर सार्वजनिक नहीं होगा।",
-  "Submitting an application does not reserve the load or confirm any freight payment. V.R Logistics will contact you after reviewing your details.": "आवेदन भेजने से माल की बुकिंग पक्की नहीं होती। V.R Logistics जानकारी देखकर आपसे संपर्क करेगी।",
+  "I am authorised to offer this vehicle. I agree that Setu Logistics may contact me about this load. My phone number will not be shown publicly.": "मैं इस गाड़ी के लिए आवेदन करने के लिए अधिकृत हूँ। Setu Logistics मुझसे संपर्क कर सकती है। मेरा मोबाइल नंबर सार्वजनिक नहीं होगा।",
+  "Submitting an application does not reserve the load or confirm any freight payment. Setu Logistics will contact you after reviewing your details.": "आवेदन भेजने से माल की बुकिंग पक्की नहीं होती। Setu Logistics जानकारी देखकर आपसे संपर्क करेगी।",
   "Send application": "आवेदन भेजें",
   "Application received": "आवेदन मिल गया",
   "Your truck application was sent.": "आपकी गाड़ी का आवेदन भेज दिया गया है।",
@@ -561,7 +563,7 @@ Object.assign(translations,{
   "Rejected": "अस्वीकार हुआ"
 });
 
-const regexRules = [
+const regexRules: Array<[RegExp,(...args:string[])=>string]> = [
   [/^(\d+) available load\(s\)$/,(_,n)=>n+' उपलब्ध माल'],
   [/^(\d+) truck\(s\) shown · Contact broker for confirmation$/,(_,n)=>n+' ट्रक दिखाई दे रहे हैं · पुष्टि के लिए ब्रोकर से संपर्क करें'],
   [/^From (.+)$/,(_,date)=>'तारीख: '+date],
@@ -582,7 +584,7 @@ export function setLanguage(lang){
 export function t(value){
   return getLanguage()==='hi'?translateStatic(value):String(value??'');
 }
-export function localize(root=document){
+export function localize(root:Document|Element=document){
   const locale=getLanguage();
   document.documentElement.lang=locale;
   const tree=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
@@ -603,7 +605,7 @@ export function localize(root=document){
       el.setAttribute(attr,locale==='hi'?translateStatic(cached[attr]):cached[attr]);
     }
   }
-  document.querySelectorAll('.language-switch [data-lang]').forEach(button=>{
+  document.querySelectorAll<HTMLButtonElement>('.language-switch [data-lang]').forEach(button=>{
     const active=button.dataset.lang===locale;
     button.classList.toggle('active',active);
     button.setAttribute('aria-pressed',String(active));

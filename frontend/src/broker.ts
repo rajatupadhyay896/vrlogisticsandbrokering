@@ -1,14 +1,14 @@
 import {tripsPanel,driverRequestsPanel,documentPanel} from './operations.js';
 import {esc,rupees,fmt,field,btn,pageHeader,chip,percent,inDays,BODIES,mailto,whatsapp,digitsPhone} from './lib.js';
 
-export function loginView(config={}){
+export function loginView(config:{configured?:boolean}={}){
  const unavailable = config.configured===false;
  return pageHeader('BROKERAGE ADMINISTRATION','THE <span>BROKER DESK.</span>','One private operations desk for truck availability, customer load requests, matching and freight quotations.')+
  `<div class="container portal"><div class="surface broker-login"><div class="surface-body">
    <div class="eyebrow">AUTHORISE ACCESS</div><h2>CONTROL THE NETWORK.</h2>
    <p>Contact details, supply availability and quotation margins remain visible only after broker login.</p>
-   ${unavailable?`<div class="setup-warning"><strong>Server setup required.</strong><p>The brokerage backend needs its server-side environment variables before live records can be accepted. Set <code>BROKER_ADMIN_PASSWORD</code> (12+ characters) and <code>BROKER_SESSION_SECRET</code> (32+ characters) with your hosting provider. Never place these secrets in your frontend or GitHub files.</p></div>`:`<form id="login-form"><div class="field"><label for="broker-password">Broker access password</label><input id="broker-password" name="password" type="password" autocomplete="current-password" required placeholder="Enter private broker password"></div><button class="btn primary" type="submit">Unlock broker desk ↗</button></form>`}
-   <div class="divider"></div><p class="security-copy">V.R Logistics does not publish trucker or customer phone numbers on the public site. Every actual quote is reviewed by a broker before sharing.</p>
+   ${unavailable?`<div class="setup-warning"><strong>Server setup required.</strong><p>The brokerage backend needs its server-side environment variables before live records can be accepted. Set <code>BROKER_ADMIN_PASSWORD</code> (12+ characters) with your hosting provider. Never place these secrets in your frontend or GitHub files.</p></div>`:`<form id="login-form"><div class="field"><label for="broker-password">Broker access password</label><input id="broker-password" name="password" type="password" autocomplete="current-password" required placeholder="Enter private broker password"></div><button class="btn primary" type="submit">Unlock broker desk ↗</button></form>`}
+   <div class="divider"></div><p class="security-copy">Setu Logistics does not publish trucker or customer phone numbers on the public site. Every actual quote is reviewed by a broker before sharing.</p>
  </div></div></div>`;
 }
 function toolbar(tabs,active){
@@ -95,8 +95,8 @@ export function applicationsTable(dash){
 export function applicationDetail(dash,a){
  const load=dash.loads.find(x=>x.id===a.loadId);
  const phone=digitsPhone(a.phone);
- const title='V.R Logistics application '+a.id+' for '+a.loadId;
- const note='Hello '+a.contactName+', V.R Logistics regarding your truck application '+a.id+' for '+(load?.origin||'')+' to '+(load?.destination||'')+'.';
+ const title='Setu Logistics application '+a.id+' for '+a.loadId;
+ const note='Hello '+a.contactName+', Setu Logistics regarding your truck application '+a.id+' for '+(load?.origin||'')+' to '+(load?.destination||'')+'.';
  return '<p class="fine">Applicant details are visible only to the broker. Verify the vehicle and available rate before confirming.</p>'+
   details([['Application',a.id],['Customer load',a.loadId],['Pickup → destination',(load?.origin||'—')+' → '+(load?.destination||'—')],
    ['Supplier',a.company||a.contactName],['Contact person',a.contactName],['Phone',a.phone],['Email',a.email||'—'],
@@ -118,7 +118,7 @@ export function brokerView(dash,tab='overview'){
  const s=dash.summary;
  const stat=(label,val,note)=>'<div class="stat"><small>'+label+'</small><strong>'+val+'</strong><span class="hint">'+note+'</span></div>';
  const panel=tab==='applications'?applicationsTable(dash):tab==='loads'?loadTable(dash):tab==='trucks'?truckTable(dash):tab==='quotes'?quoteTable(dash):tab==='trips'?tripsPanel(dash):tab==='requests'?driverRequestsPanel(dash):tab==='documents'?documentPanel(dash):summaryView(dash);
- return pageHeader('PRIVATE BROKER CONTROL CENTER','V.R <span>OPERATIONS.</span>','Your incoming customer demand, owner fleet availability, matches and quotations—under one private login.')+
+ return pageHeader('PRIVATE BROKER CONTROL CENTER','SETU <span>OPERATIONS.</span>','Your incoming customer demand, owner fleet availability, matches and quotations—under one private login.')+
   '<div class="container admin-dashboard"><div class="admin-heading"><div><h2>Broker command center</h2><p>Private live workspace · Rates and contacts never appear on the public truck board.</p></div>'+btn('Export records ↓','export-data','','btn small')+btn('Sign out ↗','logout','','btn small')+'</div>'+
   '<div class="stat-strip">'+stat('Pending customer loads',s.openLoads,'New or quoted')+stat('Available trucks',s.availableTrucks,'Ready to match')+
   stat('Quotations in progress',s.activeQuotes,'Draft / sent')+stat('Accepted gross spread',rupees(s.expectedSpread),'Before operating costs')+'</div>'+
@@ -132,7 +132,7 @@ const contactActions=(phone,email,subject,note)=>'<div class="inline-actions" st
  (phone?'<a class="btn small" target="_blank" rel="noopener noreferrer" href="'+esc(whatsapp(phone,note))+'">WhatsApp ↗</a>':'')+
  (phone?'<a class="btn small" href="tel:+'+esc(digitsPhone(phone))+'">Call ☎</a>':'')+'</div>';
 export function loadDetail(l){
- const note='Hello '+l.contactName+', regarding your V.R Logistics load request '+l.id+' ('+l.origin+' to '+l.destination+').';
+ const note='Hello '+l.contactName+', regarding your Setu Logistics load request '+l.id+' ('+l.origin+' to '+l.destination+').';
  return '<p class="fine">Customer details are private. Contact them only for an operationally relevant quote or booking follow-up.</p>'+
  details([['Reference',l.id],['Company',l.company||'Not provided'],['Contact person',l.contactName],
   ['Phone',l.phone],['Email',l.email||'Not provided'],['Origin',l.origin],['Destination',l.destination],
@@ -142,7 +142,7 @@ export function loadDetail(l){
  contactActions(l.phone,l.email,'Your freight request · '+l.id,note);
 }
 export function truckDetail(t){
- const note='Hello '+t.contactName+', V.R Logistics checking availability of your '+t.feet+' ft / '+t.capacityMt+' MT truck ('+t.id+').';
+ const note='Hello '+t.contactName+', Setu Logistics checking availability of your '+t.feet+' ft / '+t.capacityMt+' MT truck ('+t.id+').';
  return '<p class="fine">The following information is only visible to the broker. Verify owner, vehicle documents and insurance before dispatch.</p>'+
  details([['Truck listing',t.id],['Owner / fleet',t.company||'Not provided'],['Contact person',t.contactName],
   ['Phone',t.phone],['Email',t.email||'Not provided'],['Current location',t.origin],['Preferred destination',t.destination||'Flexible'],
@@ -180,7 +180,7 @@ export function manualQuoteForm(dash,loadId,truckId){
 export function quoteMessage(q,l,lang='en'){
  const rate=Number(q.customerRate).toLocaleString('en-IN');
  if(lang==='hi')return [
-  'V.R LOGISTICS — माल ढुलाई का कोटेशन '+q.id,
+  'SETU LOGISTICS — माल ढुलाई का कोटेशन '+q.id,
   'लोड नंबर: '+l.id,
   'लोडिंग की जगह: '+l.origin,
   'अनलोडिंग की जगह: '+l.destination,
@@ -192,10 +192,10 @@ export function quoteMessage(q,l,lang='en'){
   'भाड़े की शर्तें: '+(q.terms||'बात करके तय होंगी'),
   'अतिरिक्त जानकारी: '+(q.notes||'—'),
   'ट्रक की उपलब्धता, अंतिम पुष्टि और लिखित सहमति के बाद ही बुकिंग पक्की होगी।',
-  'V.R Logistics'
+  'Setu Logistics'
  ].join('\n');
  return [
-  'V.R LOGISTICS — FREIGHT QUOTATION '+q.id,
+  'SETU LOGISTICS — FREIGHT QUOTATION '+q.id,
   'Load ref: '+l.id,
   'Origin: '+l.origin,
   'Destination: '+l.destination,
@@ -207,7 +207,7 @@ export function quoteMessage(q,l,lang='en'){
   'Freight terms: '+(q.terms||'To be agreed in writing'),
   'Remarks: '+(q.notes||'—'),
   'Subject to truck availability, final confirmation and written agreement.',
-  'V.R Logistics'
+  'Setu Logistics'
  ].join('\n');
 }
 export function shareQuote(q,l,t,quoteLang='en'){
@@ -219,7 +219,7 @@ export function shareQuote(q,l,t,quoteLang='en'){
  '</div></div><div class="quote-preview" style="margin-top:12px">'+esc(message)+'</div>'+
  '<div class="form-actions">'+
  btn('Copy quotation','copy-quote','data-id="'+esc(q.id)+'"','btn')+
- (l.email?'<a class="btn primary" href="'+esc(mailto(l.email,(quoteLang==='hi'?'माल ढुलाई का कोटेशन ':'Freight quotation ')+q.id+' | V.R Logistics',message))+'">Open email draft ↗</a>':'')+
+ (l.email?'<a class="btn primary" href="'+esc(mailto(l.email,(quoteLang==='hi'?'माल ढुलाई का कोटेशन ':'Freight quotation ')+q.id+' | Setu Logistics',message))+'">Open email draft ↗</a>':'')+
  '<a class="btn primary" target="_blank" rel="noopener noreferrer" href="'+esc(whatsapp(l.phone,message))+'">Open WhatsApp draft ↗</a>'+
  '<a class="btn small" href="tel:+'+esc(digitsPhone(l.phone))+'">Call customer ☎</a></div>'+
  '<p class="fine" style="margin-top:13px">These actions open drafts or copy text. They do <strong>not</strong> send any message automatically. Mark as sent only after you actually share the quote. Truck owner buy-rate is deliberately excluded.</p>'+

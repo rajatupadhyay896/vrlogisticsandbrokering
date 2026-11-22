@@ -27,7 +27,8 @@ export const inDays = n => {const d=new Date();d.setDate(d.getDate()+n);return [
 export const onlyNumbers = v => String(v??'').replace(/\D/g,'');
 export const percent=(n,d)=>d?((n/d)*100).toFixed(1)+'%':'—';
 export const chip=(status)=>'<span class="status-pill '+(['available','accepted','booked'].includes(status)?'':(['new','draft','unavailable'].includes(status)?'muted':(['declined','closed','rejected'].includes(status)?'red':'gold')))+'">'+esc(statusNames[status]||status)+'</span>';
-export const field=(label,name,opts={})=>{
+type FieldOptions={required?:boolean;value?:unknown;options?:string[][];textarea?:boolean;placeholder?:string;type?:string;min?:number;max?:number;step?:number;autocomplete?:string;full?:boolean;hint?:string};
+export const field=(label:string,name:string,opts:FieldOptions={})=>{
   const required=opts.required?'<span class="req">*</span>':'';
   const attrib=opts.required?'required':'';
   const value=opts.value??'';
@@ -51,23 +52,24 @@ export const btn=(label,action,attrs='',kind='btn')=>'<button class="'+kind+'" d
 export const pageHeader=(tag,title,description)=>
   '<section class="page-heading"><div class="container"><div class="eyebrow">'+tag+'</div><h1>'+title+'</h1><p>'+description+'</p></div></section>';
 export const message=(title,details,bad=false)=>'<div class="message '+(bad?'error':'')+'"><strong>'+title+'</strong><p>'+details+'</p></div>';
+let toastTimer:ReturnType<typeof setTimeout>;
 export function toast(text){
   const node=document.querySelector('#toast');node.textContent=t(text);node.classList.add('visible');
-  clearTimeout(toast.timer);toast.timer=setTimeout(()=>node.classList.remove('visible'),4200);
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>node.classList.remove('visible'),4200);
 }
-export async function api(path,options={}){
+export async function api(path:string,options:RequestInit={}){
   let result;
   try{
     result=await fetch(API+path,{credentials:'same-origin',headers:{...(options.body?{'Content-Type':'application/json'}:{}),...options.headers},...options});
   }catch{
-    throw Error(t('Cannot connect to the V.R Logistics server. Check deployment and internet access.'));
+    throw Error(t('Cannot connect to the Setu Logistics server. Check deployment and internet access.'));
   }
   let payload;
   try{payload=await result.json()}catch{throw Error(t('Server returned an unexpected response.'));}
   if(!result.ok)throw Error(t(payload.error||'Request failed.'));
   return payload;
 }
-export const faqSide=(title,description,items)=>'<aside class="surface"><div class="info-side"><h3>'+title+'</h3><p>'+description+'</p><div class="checklist">'+items.map(([t,d])=>'<div class="check-item"><span class="check">✓</span><div><b>'+t+'</b>'+d+'</div></div>').join('')+'</div><div class="divider"></div><div class="safety-note">V.R Logistics confirms rates and truck placements individually. Submitting information does not guarantee a booking or create a binding quotation.</div></div></aside>';
+export const faqSide=(title,description,items)=>'<aside class="surface"><div class="info-side"><h3>'+title+'</h3><p>'+description+'</p><div class="checklist">'+items.map(([t,d])=>'<div class="check-item"><span class="check">✓</span><div><b>'+t+'</b>'+d+'</div></div>').join('')+'</div><div class="divider"></div><div class="safety-note">Setu Logistics confirms rates and truck placements individually. Submitting information does not guarantee a booking or create a binding quotation.</div></div></aside>';
 export const digitsPhone=v=>{const p=onlyNumbers(v).slice(0,15);return p.length===10?'91'+p:p;};
 export const whatsapp = (phone,text) => 'https://wa.me/'+digitsPhone(phone)+'?text='+encodeURIComponent(text);
 export const mailto = (email,subject,text) => 'mailto:'+encodeURIComponent(email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(text);

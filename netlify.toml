@@ -1,17 +1,5 @@
 [build]
   command = "npm run build"
-  publish = "public"
-
+  publish = "frontend/dist"
 [build.environment]
   NODE_VERSION = "22"
-
-[functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"
-  included_files = ["runtime/**"]
-
-[[redirects]]
-  from = "/api/freight/*"
-  to = "/.netlify/functions/freight/:splat"
-  status = 200
-  force = true
