@@ -33,13 +33,15 @@ body,.btn,button,input,select,textarea,.site-wrap h1,.site-wrap h2,.site-wrap h3
 
 .home-guide{padding-block:32px 60px;color:var(--setu-ink)}
 .home-guide h2{font-size:clamp(26px,3vw,38px);margin:0 0 20px}
-.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr));gap:14px}
-.guide-grid article{display:flex;flex-direction:column;background:#f2f6f4;border-top:3px solid var(--setu-teal);border-radius:4px;padding:22px}
+.guide-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+.guide-grid article{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:12px;background:#f2f6f4;border-top:3px solid var(--setu-teal);border-radius:4px;padding:22px}
 .guide-grid h3{font-size:22px;line-height:1.25;margin:0}
-.guide-grid p,.home-faq p{color:#405860;line-height:1.55;margin:12px 0}
-.guide-grid a{color:var(--setu-teal);font-weight:700;margin-top:auto;padding-block:10px}
+.guide-grid p,.home-faq p{color:#405860;line-height:1.55;margin:0}
+.guide-grid a{color:var(--setu-teal);font-weight:700;align-self:start;padding-block:10px}
 .home-faq{margin-top:48px}.home-faq details{border-top:1px solid var(--setu-line)}
 .home-faq summary{cursor:pointer;font-weight:650;padding:15px 4px}.home-faq p{margin:0 4px 18px;max-width:75ch}
+@media(min-width:640px){.guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1200px){.guide-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(min-width:800px){.home-faq{display:grid;grid-template-columns:1fr 2fr;gap:32px}}
 
 /* Shared reading sizes for the public boards, forms and dispatch tools. */
@@ -68,3 +70,21 @@ body,.site-wrap,.site-header,.page-heading,.load-home-section,.guide-grid articl
 .site-wrap input[type=checkbox],.modal input[type=checkbox]{accent-color:#588700}
 @media(min-width:1161px) and (max-width:1360px){.site-header{padding-inline:14px;gap:8px}.site-nav{gap:1px}.site-nav a{padding-inline:7px}}
 @media(max-width:380px){.site-header .setu-brand{font-size:1rem;gap:4px}.site-header .setu-mark{width:24px}.site-header .language-switch button{padding-inline:6px}}
+
+/* Rows follow the tallest translated label in each group of peer cards. */
+.listing-grid > .listing,.feature-grid > .feature-card,.stat-strip > .stat,.detail-grid > .detail-box{
+  display:grid;grid-template-rows:subgrid;align-items:start;min-width:0;overflow-wrap:anywhere
+}
+.listing-grid > .listing{grid-row:span 6;row-gap:8px}
+.listing-grid .listing > *{margin-block:0}
+.listing-grid .listing-top,.listing-footer{flex-wrap:wrap}
+.feature-grid > .feature-card{grid-row:span 4;row-gap:8px}
+.feature-card > .btn{justify-self:start}
+.stat-strip > .stat{grid-row:span 3;row-gap:5px}
+.stat-strip > .stat:has(> :last-child:nth-child(2)),.detail-grid > .detail-box{grid-row:span 2;row-gap:5px}
+.stat-strip .stat strong{margin:0}
+@media(min-width:641px){
+  .form-grid > .field:has(>label:first-child):not(.full){display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:4px}
+}
+.surface,.surface-body,.admin-dashboard,.portal,.table-scroller,.two-pane > *,.main-grid > *{min-width:0}
+.surface-head,.section-head{flex-wrap:wrap}

@@ -63,8 +63,8 @@ export function formLoad(truck?:{id:string;origin:string;destination:string;feet
 export function boardCards(trucks,limit=0){
  const list=limit?trucks.slice(0,limit):trucks;
  if(!list.length)return '<div class="surface"><div class="empty"><div class="empty-icon">▰</div><strong>No public vehicles yet.</strong><p>Availability will appear here once truck owners submit their vehicles. You can still post a load for manual review.</p><a class="btn primary" data-page="list-truck" href="#list-truck" style="margin-top:18px">List a vehicle ↗</a></div></div>';
- return '<div class="listing-grid">'+list.map(t=>`<article class="listing"><div class="listing-top"><span class="listing-id">${esc(t.id)}</span>${chip(t.status)}</div>
-  ${t.documentReviewedAt?'<span class="status-pill">Vehicle document reviewed</span>':''}<h3>${esc(t.feet)} FT · ${esc(t.capacityMt)} MT</h3>
+ return '<div class="listing-grid">'+list.map(t=>`<article class="listing"><div class="listing-top"><span class="listing-id">${esc(t.id)}</span>${chip(t.status)}
+  ${t.documentReviewedAt?'<span class="status-pill">Vehicle document reviewed</span>':''}</div><h3>${esc(t.feet)} FT · ${esc(t.capacityMt)} MT</h3>
   <p class="listing-note">${esc(VEHICLE_PRESETS.find(p=>p.id===t.vehicleClass)?.label||'Vehicle capacity to be confirmed')}</p>
   <p class="route">${esc(t.origin)}<span>→</span>${esc(t.destination||'Flexible destination')}</p>
   <div class="listing-info"><b>${esc(t.bodyType==='closed'?'Closed / container':t.bodyType==='open'?'Open body':t.bodyType==='flatbed'?'Flatbed':'Special body')}</b><b>${esc(t.feet)} ft truck</b><b>${esc(t.capacityMt)} metric tons</b></div>
