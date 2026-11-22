@@ -23,7 +23,7 @@ function Shell(){
       <button type="button" data-lang="en" lang="en">EN</button><button type="button" data-lang="hi" lang="hi">हिंदी</button></div>
       <button type="button" className="menu-btn" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Toggle navigation">☰</button></div>
   </header><main id="app" aria-live="polite"/><Navigation compact/>
-  <footer className="site-footer"><div className="footer-main"><strong>Setu Logistics</strong><a className="call-number" href="tel:+917738103505">+91 7738103505</a></div></footer>
+  <footer className="site-footer"><div className="footer-main"><strong>Setu Logistics</strong><div className="inline-actions"><a className="call-number" href="tel:+917738103505">+91 7738103505</a><a className="call-number" href="mailto:setulogistics@outlook.com">setulogistics@outlook.com</a></div></div></footer>
   <div id="toast" role="status" aria-live="polite"/></div>;
 }
 flushSync(()=>createRoot(document.getElementById('root')!).render(<Shell/>));
