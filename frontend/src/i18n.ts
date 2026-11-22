@@ -1,5 +1,9 @@
 /* Setu Logistics bilingual interface. Static English source remains the canonical UI and data schema. */
 const translations = {
+  "Setu Logistics":"सेतु लॉजिस्टिक्स",
+  "Find a return load":"वापसी का लोड खोजें",
+  "Find a truck by route":"रूट के हिसाब से ट्रक खोजें",
+  "Freight board":"माल ढुलाई बोर्ड",
   'Track a shipment':'खेप की स्थिति देखें',
   'Customer tracking':'ग्राहक ट्रैकिंग','Share customer link':'ग्राहक लिंक साझा करें','Create customer link':'ग्राहक लिंक बनाएँ',
   'Current town or landmark':'अभी किस शहर या जगह पर हैं?','Your broker and customer can see this update.':'आपका ब्रोकर और ग्राहक यह जानकारी देख सकते हैं।',

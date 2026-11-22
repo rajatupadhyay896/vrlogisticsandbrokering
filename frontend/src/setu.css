@@ -2,14 +2,17 @@
 body,.btn,button,input,select,textarea,.site-wrap h1,.site-wrap h2,.site-wrap h3,.modal h2,.stat strong,.load-card-lane,.listing .route{font-family:'Source Sans 3','Noto Sans Devanagari',system-ui,sans-serif}
 [lang=hi] body,[lang=hi] .site-wrap h1,[lang=hi] .site-wrap h2,[lang=hi] .site-wrap h3{font-family:'Noto Sans Devanagari','Source Sans 3',system-ui,sans-serif;line-height:1.5}
 .setu-brand{display:inline-flex;align-items:center;gap:9px;color:var(--setu-ink);font-size:22px;font-weight:700;letter-spacing:-.04em;white-space:nowrap}
-.setu-mark{display:grid;place-items:center;background:var(--setu-ink);color:white;border-radius:5px;width:34px;height:38px;border-bottom:4px solid #d99042}
+.setu-mark{display:block;width:34px;height:auto}
 .dispatch{width:min(1200px,100%);margin:0 auto;display:grid;gap:24px;padding:36px 20px;align-items:center}
 .dispatch h1{color:var(--setu-ink);font-size:clamp(38px,5vw,70px);letter-spacing:-.045em;line-height:1.08;margin:0 0 18px;text-transform:none}
 .dispatch p{max-width:49ch;color:#405860;font-size:clamp(17px,1.6vw,21px);line-height:1.6}
 .dispatch-actions{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 14px}.dispatch-actions a{min-height:48px}
 .owner-link{text-decoration:underline;color:#195c4e;font-weight:600}
 .dispatch-board{overflow:hidden;border:1px solid var(--setu-line);border-radius:12px;background:#fff}
-.truck-photo{display:block;width:100%;height:clamp(180px,23vw,310px);object-fit:cover;object-position:50% 59%;background:#e8eeea}
+.dispatch-panel{background:var(--setu-ink);color:white;padding:clamp(20px,3vw,36px)}
+.dispatch-panel h2{font-size:clamp(23px,3vw,32px);color:inherit;margin:0 0 15px}
+.dispatch-lane{display:grid;gap:4px}.dispatch-lane a{display:block;color:white;padding:12px 0;border-top:1px solid #527080;font-weight:600}.dispatch-lane a::after{content:"↗";float:right;color:#edb878}
+
 .board-links{display:grid;grid-template-columns:1fr 1fr}.board-links a{display:grid;gap:2px;padding:12px 18px;color:var(--setu-ink)}.board-links a+a{border-left:1px solid var(--setu-line)}.board-links b{font-size:27px}.board-links span{font-size:15px}
 .section-head h2,.page-heading h1{letter-spacing:-.025em}.mobile-quick-nav a{min-height:50px}
 @media(min-width:760px){.dispatch{grid-template-columns:1.1fr 1fr;gap:56px;padding:64px 32px}}

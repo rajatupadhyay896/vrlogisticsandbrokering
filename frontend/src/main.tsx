@@ -18,7 +18,7 @@ function Navigation({compact=false}:{compact?:boolean}) {
 }
 function Shell(){
   return <div className="site-wrap"><header className="site-header">
-    <a className="setu-brand" data-page="home" href="#home" aria-label="Setu Logistics home"><span className="setu-mark" aria-hidden="true">S</span><span>Setu Logistics</span></a>
+    <a className="setu-brand" data-page="home" href="#home" aria-label="Setu Logistics home"><img className="setu-mark" src="/setu-mark.svg" alt="" width="34" height="34"/><span>Setu Logistics</span></a>
     <Navigation/><div className="header-actions"><div className="language-switch" role="group" aria-label="Select website language">
       <button type="button" data-lang="en" lang="en">EN</button><button type="button" data-lang="hi" lang="hi">हिंदी</button></div>
       <button type="button" className="menu-btn" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Toggle navigation">☰</button></div>
