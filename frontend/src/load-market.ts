@@ -1,4 +1,4 @@
-import {BODIES,VEHICLE_PRESETS,esc,field,sharedContact,fmt,today,pageHeader,chip} from './lib.js';
+import {boardNotice,boardOffline,BODIES,VEHICLE_PRESETS,esc,field,sharedContact,fmt,today,pageHeader,chip} from './lib.js';
 
 const bodyName={open:'Open body / खुली बॉडी',closed:'Closed / container',flatbed:'Flatbed / trailer',other:'Other / special'};
 const bodyOptions=[['all','All body types'],...BODIES];
@@ -13,7 +13,7 @@ export function selectLoads(board,query='',body='all'){
 
 export function loadCards(loads,limit=0){
   const items=limit?loads.slice(0,limit):loads;
-  if(!items.length)return '<div class="surface"><div class="empty"><span class="empty-icon">▤</span><strong>No loads listed at the moment</strong><p>New transport requirements will appear here. You can still list your vehicle so Setu Logistics can reach you.</p><a href="#list-truck" class="btn primary" data-page="list-truck">List your vehicle ↗</a></div></div>';
+  if(!items.length)return boardNotice('No loads listed','List your truck so our freight desk can contact you about a load.','List your truck','#list-truck');
   return '<div class="listing-grid load-market-grid">'+items.map(l=>`<article class="listing load-card">
     <div class="listing-top"><span class="listing-id">${esc(l.id)}</span><span class="status-pill">Open for applications</span></div>
     <div class="load-card-lane"><span>${esc(l.origin)}</span><span class="lane-arrow" aria-hidden="true">→</span><span>${esc(l.destination)}</span></div>
@@ -27,12 +27,13 @@ export function loadCards(loads,limit=0){
 export function findLoads(board,query='',body='all'){
   const loads=selectLoads(board,query,body);
   return pageHeader('FOR TRUCK OWNERS','FIND A <span>LOAD.</span>','Browse current customer freight requirements and apply with your available vehicle. Setu Logistics reviews applications before confirming a trip.')+
+    (!board?'<div class="container portal">'+boardOffline()+'</div>':
     '<div class="container portal"><div class="surface" style="margin-bottom:20px"><div class="filter-bar mobile-load-filters">'+
     '<label class="market-search"><span>Search loads by location, material or size</span><input type="search" id="load-search" placeholder="e.g. Mumbai, Pune, steel, 32 ft" value="'+esc(query)+'" autocomplete="off" aria-label="Search available freight loads"></label>'+
     '<label class="market-filter"><span>Vehicle body</span><select id="load-body-filter" aria-label="Filter loads by vehicle body">'+bodyOptions.map(([v,t])=>'<option value="'+esc(v)+'" '+(v===body?'selected':'')+'>'+esc(t)+'</option>').join('')+'</select></label>'+
     '<div class="filter-note" id="load-count" aria-live="polite">'+loads.length+' available load(s)</div></div></div>'+
     '<div id="load-results">'+loadCards(loads)+'</div>'+
-    '<p class="fine" style="margin-top:23px">Loads are customer-submitted. Availability, routing, freight rate and vehicle suitability must be confirmed by Setu Logistics before dispatch.</p></div>';
+    '<p class="fine" style="margin-top:23px">Loads are customer-submitted. Availability, routing, freight rate and vehicle suitability must be confirmed by Setu Logistics before dispatch.</p></div>');
 }
 
 export function applicationForm(load){

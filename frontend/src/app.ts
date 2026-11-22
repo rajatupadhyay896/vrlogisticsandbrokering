@@ -28,9 +28,9 @@ function render(){
  document.querySelectorAll<HTMLElement>('#nav [data-page]').forEach(a=>a.classList.toggle('active',a.dataset.page===state.page));
  document.querySelectorAll<HTMLElement>('.mobile-quick-nav [data-page]').forEach(a=>a.classList.toggle('active',a.dataset.page===state.page));
  let markup='';
- if(state.page==='home')markup=home(state.board)+(state.board===null?'<div class="container"><p class="safety-note">Live availability is not currently connected. The public board will refresh when the brokerage server is configured.</p></div>':'');
- if(state.page==='find-trucks')markup=findTrucks(state.board,state.search,state.body)+(state.board===null?'<div class="container"><p class="setup-warning">Live truck data is currently unavailable. Please try again later.</p></div>':'');
- if(state.page==='find-loads')markup=findLoads(state.board,state.loadSearch,state.loadBody)+(state.board===null?'<div class="container"><p class="setup-warning">Live freight requests are unavailable until the server is configured.</p></div>':'');
+ if(state.page==='home')markup=home(state.board);
+ if(state.page==='find-trucks')markup=findTrucks(state.board,state.search,state.body);
+ if(state.page==='find-loads')markup=findLoads(state.board,state.loadSearch,state.loadBody);
  if(state.page==='list-truck')markup=formTruck();
  if(state.page==='post-load')markup=formLoad(state.board?.trucks.find(truck=>location.hash==='#post-load/'+truck.id));
  if(state.page==='broker')markup=state.dash?brokerView(state.dash,state.adminTab):loginView(state.config||{});

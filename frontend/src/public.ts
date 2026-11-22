@@ -1,7 +1,8 @@
-import {BODIES,SIZES,KNOWN_MT,VEHICLE_PRESETS,esc,rupees,fmt,field,sharedContact,btn,pageHeader,faqSide,message,chip,today,inDays} from './lib.js';
+import {boardNotice,boardOffline,BODIES,SIZES,KNOWN_MT,VEHICLE_PRESETS,esc,rupees,fmt,field,sharedContact,btn,pageHeader,faqSide,message,chip,today,inDays} from './lib.js';
 import {loadCards} from './load-market.js';
 
 export function home(board=null){
+  if(!board)return '<section class="container portal">'+boardOffline()+'</section>';
   return `<div class="page">
     <section class="section"><div class="container"><div class="section-head"><div><h2>Available trucks</h2></div><a href="#find-trucks" data-page="find-trucks" class="btn light">Explore truck board ↗</a></div>
     ${boardCards((board?.trucks||[]).slice(0,3),3)}</div></section>
@@ -61,7 +62,7 @@ export function formLoad(truck?:{id:string;origin:string;destination:string;feet
 }
 export function boardCards(trucks,limit=0){
  const list=limit?trucks.slice(0,limit):trucks;
- if(!list.length)return '<div class="surface"><div class="empty"><div class="empty-icon">▰</div><strong>No public vehicles yet.</strong><p>Availability will appear here once truck owners submit their vehicles. You can still post a load for manual review.</p><a class="btn primary" data-page="list-truck" href="#list-truck" style="margin-top:18px">List a vehicle ↗</a></div></div>';
+ if(!list.length)return boardNotice('No trucks listed','Post your load and our freight desk can help find a truck.','Request a truck','#post-load');
  return '<div class="listing-grid">'+list.map(t=>`<article class="listing"><div class="listing-top"><span class="listing-id">${esc(t.id)}</span>${chip(t.status)}
   ${t.documentReviewedAt?'<span class="status-pill">Vehicle document reviewed</span>':''}</div><h3>${esc(t.feet)} FT · ${esc(t.capacityMt)} MT</h3>
   <p class="listing-note">${esc(VEHICLE_PRESETS.find(p=>p.id===t.vehicleClass)?.label||'Vehicle capacity to be confirmed')}</p>
@@ -75,5 +76,6 @@ export function selectTrucks(board,query='',body='all'){
 export function findTrucks(board,query='',body='all'){
  const list=selectTrucks(board,query,body);
  return pageHeader('LIVE NETWORK AVAILABILITY','FIND AN <span>AVAILABLE TRUCK.</span>','Browse truck owners’ publicly listed availability. Contact information and vehicle registration are private to the Setu Logistics brokerage team.')+
-  '<div class="container portal"><div class="surface" style="margin-bottom:22px"><div class="filter-bar"><input id="truck-search" type="search" placeholder="Search origin, destination, length, MT…" value="'+esc(query)+'" aria-label="Search vehicle availability"><select id="truck-body-filter" aria-label="Filter by truck body"><option value="all">All vehicle types</option>'+BODIES.map(([value,label])=>'<option value="'+esc(value)+'" '+(body===value?'selected':'')+'>'+esc(label)+'</option>').join('')+'</select><span class="filter-note" id="truck-count" aria-live="polite">'+list.length+' truck(s) shown · Contact broker for confirmation</span></div></div><div id="truck-cards">'+boardCards(list)+'</div><p class="fine" style="margin-top:20px">Public availability is self-reported and may change. A listing is not a guarantee of dispatch, vehicle fitness, permit compliance or a fixed freight rate.</p></div>';
+  (!board?'<div class="container portal">'+boardOffline()+'</div>':
+  '<div class="container portal"><div class="surface" style="margin-bottom:22px"><div class="filter-bar"><input id="truck-search" type="search" placeholder="Search origin, destination, length, MT…" value="'+esc(query)+'" aria-label="Search vehicle availability"><select id="truck-body-filter" aria-label="Filter by truck body"><option value="all">All vehicle types</option>'+BODIES.map(([value,label])=>'<option value="'+esc(value)+'" '+(body===value?'selected':'')+'>'+esc(label)+'</option>').join('')+'</select><span class="filter-note" id="truck-count" aria-live="polite">'+list.length+' truck(s) shown · Contact broker for confirmation</span></div></div><div id="truck-cards">'+boardCards(list)+'</div><p class="fine" style="margin-top:20px">Public availability is self-reported and may change. A listing is not a guarantee of dispatch, vehicle fitness, permit compliance or a fixed freight rate.</p></div>');
 }
