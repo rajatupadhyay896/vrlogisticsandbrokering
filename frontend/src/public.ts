@@ -2,10 +2,9 @@ import {BODIES,SIZES,KNOWN_MT,VEHICLE_PRESETS,esc,rupees,fmt,field,sharedContact
 import {loadCards} from './load-market.js';
 
 export function home(board=null){
-  const avail=board?.trucks?.length||0, open=board?.loads?.length||0;
   return `<div class="page">
     <section class="section"><div class="container"><div class="section-head"><div><h2>Available trucks</h2></div><a href="#find-trucks" data-page="find-trucks" class="btn light">Explore truck board ↗</a></div>
-    ${boardCards((board?.trucks||[]).slice(0,3),3)}<p class="fine" style="margin-top:20px">Availability is owner-submitted and remains subject to individual verification by Setu Logistics. ${avail} visible truck listing(s); ${open} open customer requirement(s).</p></div></section>
+    ${boardCards((board?.trucks||[]).slice(0,3),3)}</div></section>
     <section class="section load-home-section"><div class="container"><div class="section-head"><div><h2>Available loads</h2></div><a href="#find-loads" data-page="find-loads" class="btn primary">Find more loads ↗</a></div>
     ${loadCards((board?.loads||[]).slice(0,3),3)}
     <p class="fine" style="margin-top:18px">Apply using your truck details. Customer contacts remain private and booking is confirmed by the brokerage team.</p></div></section>

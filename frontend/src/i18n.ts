@@ -55,7 +55,6 @@ const translations = {
   "TRUCKS":"ट्रक",
   "READY TO MOVE.":"चलने को तैयार।",
   "Explore truck board":"ट्रक की सूची देखें",
-  "Availability is owner-submitted and remains subject to individual verification by Setu Logistics.":"ट्रक की उपलब्धता मालिक स्वयं बताता है। Setu Logistics से पुष्टि करना आवश्यक है।",
   "FOR TRUCK OWNERS":"ट्रक मालिकों के लिए",
   "LIST YOUR":"अपना",
   "VEHICLE.":"ट्रक दर्ज करें।",
@@ -578,7 +577,6 @@ const regexRules: Array<[RegExp,(...args:string[])=>string]> = [
   [/^From (.+)$/,(_,date)=>'तारीख: '+date],
   [/^(.+) ft truck$/,(_,n)=>n+' फीट का ट्रक'],
   [/^(.+) metric tons$/,(_,n)=>n+' मीट्रिक टन'],
-  [/^(\d+) visible truck listing\(s\); (\d+) open customer requirement\(s\)\.$/,(_,n,m)=>n+' उपलब्ध ट्रक; '+m+' ग्राहक रिक्वेस्ट।']
 ];
 const originalText = new WeakMap();
 const originalAttr = new WeakMap();
