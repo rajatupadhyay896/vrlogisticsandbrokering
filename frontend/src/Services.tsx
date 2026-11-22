@@ -28,7 +28,7 @@ export function Services({owner,board}:{owner:boolean;board:Board|null}){
     {owner?<button className="btn small" data-action="apply-load" data-id={row.id}>{w('Apply for load','लोड के लिए आवेदन करें')}</button>:<a className="btn small" href={'#post-load/'+row.id}>{w('Request a quotation','भाड़ा पूछें')}</a>}</article>)}</section>
     <details><summary>{w('How is the freight rate confirmed?','भाड़ा कैसे तय होता है?')}</summary><p>{w('The broker checks the vehicle and loading requirement, then shares a quotation for acceptance before creating the trip.','ब्रोकर गाड़ी और लोड की ज़रूरत जाँचकर भाव भेजता है। भाव मंज़ूर होने के बाद ट्रिप बनती है।')}</p></details>
     <details><summary>{w('What happens after dispatch?','गाड़ी निकलने के बाद क्या होता है?')}</summary><p>{w('The driver can send a location update, upload proof of delivery and request payment. Customers can view milestones using their tracking link.','ड्राइवर अपनी लोकेशन भेज सकता है, डिलीवरी की रसीद अपलोड कर सकता है और भुगतान माँग सकता है। ग्राहक अपने लिंक से खेप की स्थिति देख सकते हैं।')}</p></details>
-    <a href="tel:+917738103505">{w('Call dispatch','डिस्पैच टीम से बात करें')} · +91 7738103505</a></section>;
+    <div className="inline-actions"><a href="tel:+917738103505">{w('Call dispatch','डिस्पैच टीम से बात करें')} · +91 7738103505</a><a href="mailto:setulogistics@outlook.com">setulogistics@outlook.com</a></div></section>;
 }
 const stages={assigned:'Vehicle assigned',loaded:'Loaded',in_transit:'On the way',delivered:'Unloaded',pod_submitted:'POD submitted',pod_accepted:'POD accepted',closed:'Closed'};
 type Snapshot={id:string;origin:string;destination:string;status:string;checkIn?:{location:string;at:string};milestones:{at:string;status:string}[]};
