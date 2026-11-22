@@ -74,8 +74,3 @@ export const digitsPhone=v=>{const p=onlyNumbers(v).slice(0,15);return p.length=
 export const whatsapp = (phone,text) => 'https://wa.me/'+digitsPhone(phone)+'?text='+encodeURIComponent(text);
 export const mailto = (email,subject,text) => 'mailto:'+encodeURIComponent(email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(text);
 export const copy=async content=>{await navigator.clipboard.writeText(content);toast('Copied to clipboard.')};
-
-export function boardNotice(title:string, description:string, action:string, href:string){
-  return '<div class="surface board-notice"><div><h3>'+esc(title)+'</h3><p>'+esc(description)+'</p></div><a class="btn primary" href="'+esc(href)+'">'+esc(action)+'</a></div>';
-}
-export const boardOffline=()=>boardNotice('Live listings are unavailable','Call our freight desk for current truck and load availability.','Call dispatch','tel:+917738103505');
