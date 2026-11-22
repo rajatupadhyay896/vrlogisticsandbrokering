@@ -2,12 +2,11 @@ import {boardNotice,boardOffline,BODIES,SIZES,KNOWN_MT,VEHICLE_PRESETS,esc,rupee
 import {loadCards} from './load-market.js';
 
 export function home(board=null){
-  if(!board)return '<section class="container portal">'+boardOffline()+'</section>';
   return `<div class="page">
     <section class="section"><div class="container"><div class="section-head"><div><h2>Available trucks</h2></div><a href="#find-trucks" data-page="find-trucks" class="btn light">Explore truck board ↗</a></div>
-    ${boardCards((board?.trucks||[]).slice(0,3),3)}</div></section>
+    ${board ? boardCards(board.trucks,3) : boardNotice('Truck availability is offline','Call the freight desk to ask about a truck.','Call dispatch','tel:+917738103505')}</div></section>
     <section class="section load-home-section"><div class="container"><div class="section-head"><div><h2>Available loads</h2></div><a href="#find-loads" data-page="find-loads" class="btn primary">Find more loads ↗</a></div>
-    ${loadCards((board?.loads||[]).slice(0,3),3)}
+    ${board ? loadCards(board.loads,3) : boardNotice('Load availability is offline','Call the freight desk to ask about a load.','Call dispatch','tel:+917738103505')}
     <p class="fine" style="margin-top:18px">Apply using your truck details. Customer contacts remain private and booking is confirmed by the brokerage team.</p></div></section>
     </div>`;
 }

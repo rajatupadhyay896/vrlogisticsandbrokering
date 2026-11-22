@@ -1,5 +1,7 @@
 /* Setu Logistics bilingual interface. Static English source remains the canonical UI and data schema. */
 const translations = {
+  'Truck availability is offline':'ट्रकों की सूची अभी उपलब्ध नहीं है','Load availability is offline':'लोड की सूची अभी उपलब्ध नहीं है',
+  'Call the freight desk to ask about a truck.':'ट्रक की जानकारी के लिए हमारी टीम को फ़ोन करें।','Call the freight desk to ask about a load.':'लोड की जानकारी के लिए हमारी टीम को फ़ोन करें।',
   'Live listings are unavailable':'अभी सूची उपलब्ध नहीं है',
   'Call our freight desk for current truck and load availability.':'उपलब्ध ट्रक और लोड की जानकारी के लिए हमारी टीम को फ़ोन करें।',
   'Call dispatch':'डिस्पैच टीम को फ़ोन करें','No loads listed':'अभी कोई लोड दर्ज नहीं है','No trucks listed':'अभी कोई ट्रक दर्ज नहीं है',
