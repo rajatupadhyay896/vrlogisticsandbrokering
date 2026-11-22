@@ -1,6 +1,6 @@
-:root{--setu-ink:#143448;--setu-teal:#176453;--setu-line:#d4dfdd}
-body,.btn,button,input,select,textarea,.site-wrap h1,.site-wrap h2,.site-wrap h3,.modal h2,.stat strong,.load-card-lane,.listing .route{font-family:'Source Sans 3','Noto Sans Devanagari',system-ui,sans-serif}
-[lang=hi] body,[lang=hi] .site-wrap h1,[lang=hi] .site-wrap h2,[lang=hi] .site-wrap h3{font-family:'Noto Sans Devanagari','Source Sans 3',system-ui,sans-serif;line-height:1.5}
+:root{--setu-ink:#182019;--setu-teal:#365e19;--setu-line:#d8dfd5;--setu-neon:#acff36;--setu-font:'Inter','Anek Devanagari',system-ui,sans-serif}
+body,.btn,button,input,select,textarea,.site-wrap h1,.site-wrap h2,.site-wrap h3,.modal h2,.stat strong,.load-card-lane,.listing .route{font-family:var(--setu-font)}
+[lang=hi] body,[lang=hi] .site-wrap h1,[lang=hi] .site-wrap h2,[lang=hi] .site-wrap h3{font-family:var(--setu-font);line-height:1.5}
 .setu-brand{display:inline-flex;align-items:center;gap:9px;color:var(--setu-ink);font-size:22px;font-weight:700;letter-spacing:-.04em;white-space:nowrap}
 .setu-mark{display:block;width:34px;height:auto}
 .dispatch{width:min(1200px,100%);margin:0 auto;display:grid;gap:24px;padding:36px 20px;align-items:center}
@@ -51,3 +51,20 @@ body,.btn,button,input,select,textarea,.site-wrap h1,.site-wrap h2,.site-wrap h3
 .site-wrap :is(.site-nav a,.btn,.field label,.field input,.field select,.field textarea,.board-links span,.language-switch button),
 .modal :is(.btn,.field label,.field input,.field select,.field textarea){font-size:1.0625rem;line-height:1.45}
 .site-wrap .mobile-quick-nav a{font-size:1rem;line-height:1.3;white-space:normal;text-align:center;min-width:0}
+
+:root{--bg:#fff;--bg2:#fafcf8;--text:var(--setu-ink);--line:var(--setu-line);--lime:#365e19}
+body,.site-wrap,.site-header,.page-heading,.load-home-section,.guide-grid article{background:#fff}
+.site-wrap :is(strong,small,th,td,label,.eyebrow,.status-pill,.stat,.route),.modal :is(strong,small,label){font-family:var(--setu-font)}
+.dispatch h1,.site-wrap h2,.site-wrap h3{letter-spacing:-.035em}
+[lang=hi] .site-wrap :is(h1,h2,h3){letter-spacing:normal}
+.site-wrap .btn.primary,.modal .btn.primary,.site-wrap .language-switch button.active,.site-wrap .admin-tabs button.active{color:var(--setu-ink);background:var(--setu-neon);border-color:var(--setu-neon);box-shadow:none}
+.site-wrap .btn.primary:hover,.modal .btn.primary:hover{background:#98ed24;border-color:#98ed24}
+.site-wrap .site-nav a.active,.site-wrap .mobile-quick-nav a.active{background:#efffda;color:#223617;box-shadow:inset 0 -3px var(--setu-neon)}
+.dispatch-panel{background:#f7fbed;color:var(--setu-ink);border-top:4px solid var(--setu-neon)}
+.dispatch-lane a{color:var(--setu-ink);border-color:#ccd7c1}.dispatch-lane a::after{color:#365e19}
+.guide-grid article{border:1px solid var(--line);border-top:4px solid var(--setu-neon)}
+.service-desk header{border-color:var(--setu-neon)}
+:where(a,button,input,textarea,select,summary):focus-visible{outline:2px solid #365e19;outline-offset:2px}
+.site-wrap input[type=checkbox],.modal input[type=checkbox]{accent-color:#588700}
+@media(min-width:1161px) and (max-width:1360px){.site-header{padding-inline:14px;gap:8px}.site-nav{gap:1px}.site-nav a{padding-inline:7px}}
+@media(max-width:380px){.site-header .setu-brand{font-size:1rem;gap:4px}.site-header .setu-mark{width:24px}.site-header .language-switch button{padding-inline:6px}}
