@@ -1,0 +1,27 @@
+# Zero-cost pilot deployment of the existing Spring Boot API.
+# Provision a free Neon PostgreSQL database separately; do NOT use Render's
+# temporary 30-day free PostgreSQL service for business records.
+# Create this service through Render > New > Blueprint with this repository.
+services:
+  - type: web
+    name: setu-freight-backend
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/freight/health
+    envVars:
+      - key: PORT
+        value: "8080"
+      - key: PUBLIC_ORIGIN
+        value: https://setusupplychain.in
+      - key: JAVA_TOOL_OPTIONS
+        value: "-Xms64m -Xmx256m -XX:ActiveProcessorCount=1 -XX:+UseSerialGC"
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_USER
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: BROKER_ADMIN_PASSWORD
+        sync: false
