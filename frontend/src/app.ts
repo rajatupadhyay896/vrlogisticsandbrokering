@@ -3,6 +3,7 @@ import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import {Services,Tracking} from './Services';
 import {Landing} from './Landing';
+import {HomeGuide} from './HomeGuide';
 import {api,esc,toast,copy,message,VEHICLE_PRESETS} from './lib.js';
 import {localize,setLanguage,getLanguage,t} from './i18n.js';
 import {home,formTruck,formLoad,findTrucks,selectTrucks,boardCards} from './public.js';
@@ -34,7 +35,7 @@ function render(){
  if(state.page==='post-load')markup=formLoad(state.board?.trucks.find(truck=>location.hash==='#post-load/'+truck.id));
  if(state.page==='broker')markup=state.dash?brokerView(state.dash,state.adminTab):loginView(state.config||{});
  if(state.page==='driver')markup=state.driverToken?driverView(state.driver,state.driverToken):driverEntry();
- flushSync(()=>pageRoot.render(createElement('div',{key:++viewVersion},state.page==='home'?createElement(Landing,{loads:state.board?.loads?.length||0,trucks:state.board?.trucks?.length||0,connected:!!state.board}):state.page==='track'?createElement(Tracking,{token:location.hash.startsWith('#track/')?location.hash.slice(7):''}):['truck-owners','transporters'].includes(state.page)?createElement(Services,{owner:state.page==='truck-owners',board:state.board}):null,createElement('div',{dangerouslySetInnerHTML:{__html:markup}}))));
+ flushSync(()=>pageRoot.render(createElement('div',{key:++viewVersion},state.page==='home'?createElement(Landing,{loads:state.board?.loads?.length||0,trucks:state.board?.trucks?.length||0,connected:!!state.board}):state.page==='track'?createElement(Tracking,{token:location.hash.startsWith('#track/')?location.hash.slice(7):''}):['truck-owners','transporters'].includes(state.page)?createElement(Services,{owner:state.page==='truck-owners',board:state.board}):null,createElement('div',{dangerouslySetInnerHTML:{__html:markup}}),state.page==='home'?createElement(HomeGuide):null)));
  localize(app);
 }
 async function refreshAdmin(options:{silent?:boolean}={}){

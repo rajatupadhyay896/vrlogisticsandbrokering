@@ -27,3 +27,14 @@ body,.btn,button,input,select,textarea,.site-wrap h1,.site-wrap h2,.site-wrap h3
 .service-desk details{border-bottom:1px solid #c6cfd0;padding-bottom:12px}.service-desk summary{cursor:pointer;font-weight:650}.service-desk details p{margin-top:10px}
 .service-links{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:18px;font-weight:600}
 @media(max-width:540px){.route-inputs{display:grid}.route-inputs button{justify-self:start}.service-desk .surface-body{padding:16px}}
+
+.home-guide{padding-block:32px 60px;color:var(--setu-ink)}
+.home-guide h2{font-size:clamp(26px,3vw,38px);margin:0 0 20px}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr));gap:14px}
+.guide-grid article{display:flex;flex-direction:column;background:#f2f6f4;border-top:3px solid var(--setu-teal);border-radius:4px;padding:22px}
+.guide-grid h3{font-size:22px;line-height:1.25;margin:0}
+.guide-grid p,.home-faq p{color:#405860;line-height:1.55;margin:12px 0}
+.guide-grid a{color:var(--setu-teal);font-weight:700;margin-top:auto;padding-block:10px}
+.home-faq{margin-top:48px}.home-faq details{border-top:1px solid var(--setu-line)}
+.home-faq summary{cursor:pointer;font-weight:650;padding:15px 4px}.home-faq p{margin:0 4px 18px;max-width:75ch}
+@media(min-width:800px){.home-faq{display:grid;grid-template-columns:1fr 2fr;gap:32px}}
