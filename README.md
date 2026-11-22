@@ -30,6 +30,10 @@ Transporters can look up a route and request a quotation using a truck listing. 
 
 From a trip in the broker desk, create a customer tracking link and share it privately. Anyone holding that link can read the route, shipment milestones and latest driver-reported location. Drivers use a separate private link for check-ins, document uploads and payment requests.
 
+## Free pilot hosting (Render + Neon)
+
+The repository now includes a free-tier Render Docker service definition in [`render.yaml`](render.yaml), with Neon Free PostgreSQL recommended for persistence. Follow [`DEPLOY_FREE.md`](DEPLOY_FREE.md) to create the two cloud services and connect Netlify's existing domain. **The blueprint does not deploy until the external accounts are authorised and database secrets are entered.** Render Free sleeps after inactivity; it is not a production-grade dispatch backend.
+
 ## Hosting
 
 The Dockerfile packages the UI and API together for a Java-capable host. To publish only the frontend on Netlify, import this repository and set FREIGHT_API_ORIGIN to the HTTPS origin of your running Spring Boot API before building. The build generates a same-origin API rewrite. Set PUBLIC_ORIGIN on the backend to the exact public frontend origin (for example https://your-site.netlify.app). Configure the JDBC connection and broker password on the backend. Netlify publishes frontend/dist. Uploading frontend assets alone does not run Java or provide a database.
