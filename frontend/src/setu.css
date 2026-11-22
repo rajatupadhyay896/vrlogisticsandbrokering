@@ -41,3 +41,13 @@ body,.btn,button,input,select,textarea,.site-wrap h1,.site-wrap h2,.site-wrap h3
 .home-faq{margin-top:48px}.home-faq details{border-top:1px solid var(--setu-line)}
 .home-faq summary{cursor:pointer;font-weight:650;padding:15px 4px}.home-faq p{margin:0 4px 18px;max-width:75ch}
 @media(min-width:800px){.home-faq{display:grid;grid-template-columns:1fr 2fr;gap:32px}}
+
+/* Shared reading sizes for the public boards, forms and dispatch tools. */
+.site-wrap,.modal{font-size:1.125rem}
+.site-wrap :is(.empty p,.fine,.safety-note,.listing-note,.surface-head p,.field small,.listing-footer,.setup-warning,.footer-main a),
+.modal :is(.fine,.field small){font-size:1rem;line-height:1.6;color:#40565b}
+.site-wrap :is(.empty strong,.listing h3){font-size:1.375rem;line-height:1.35}
+.site-wrap :is(.page-heading p,.empty p,.guide-grid p,.home-faq p){font-size:1.125rem;line-height:1.55}
+.site-wrap :is(.site-nav a,.btn,.field label,.field input,.field select,.field textarea,.board-links span,.language-switch button),
+.modal :is(.btn,.field label,.field input,.field select,.field textarea){font-size:1.0625rem;line-height:1.45}
+.site-wrap .mobile-quick-nav a{font-size:1rem;line-height:1.3;white-space:normal;text-align:center;min-width:0}
