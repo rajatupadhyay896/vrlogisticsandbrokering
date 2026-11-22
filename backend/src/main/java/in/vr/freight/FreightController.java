@@ -364,4 +364,99 @@ public class FreightController extends Records {
         .header("Content-Security-Policy", "default-src 'none'; sandbox")
         .body(bytes);
   }
+
+  @GetMapping("/public/tracking/{token}")
+  ResponseEntity<?> tracking(@PathVariable String token) {
+    ready();
+    ObjectNode db = records(false);
+    ObjectNode trip = find(db, "trips", "trackingToken", token);
+    check(trip != null && token.length() >= 25, "Tracking link not found.", 404);
+    ObjectNode load = need(db, "loads", s(trip, "loadId"));
+    ObjectNode out = pick(trip, "id status");
+    out.setAll(pick(load, "origin destination loadingDate"));
+    out.set(
+        "milestones",
+        JSON.valueToTree(rows(trip, "history").stream().map(h -> pick(h, "status at")).toList()));
+    if (trip.has("checkIn")) out.set("checkIn", pick(trip.get("checkIn"), "location at"));
+    return result(200).body(out);
+  }
+
+  @Transactional
+  @PostMapping("/admin/trips/{id}/tracking-link")
+  ResponseEntity<?> trackingLink(@PathVariable String id, HttpServletRequest req) {
+    origin(req);
+    ready();
+    admin(req);
+    return result(200)
+        .body(
+            change(
+                db -> {
+                  ObjectNode trip = need(db, "trips", id);
+                  if (s(trip, "trackingToken").isBlank()) trip.put("trackingToken", Trips.token());
+                  return pick(trip, "trackingToken");
+                }));
+  }
+
+  @Transactional
+  @PostMapping("/public/trips/{token}/check-in")
+  ResponseEntity<?> checkIn(@PathVariable String token, HttpServletRequest req) throws IOException {
+    origin(req);
+    ready();
+    ObjectNode b = body(req, 16000);
+    String location = field(b, "location", 100);
+    check(location.length() >= 2, "Enter a town or landmark.");
+    return result(200)
+        .body(
+            change(
+                db -> {
+                  ObjectNode trip = Trips.driver(db, token);
+                  check(
+                      !in(
+                          s(trip, "status"),
+                          "closed",
+                          "delivered",
+                          "pod_submitted",
+                          "pod_accepted"),
+                      "Delivery already complete.",
+                      409);
+                  ObjectNode update = obj("location", location, "at", now());
+                  trip.set("checkIn", update);
+                  event(db, "trip", s(trip, "id"), "Driver reported location: " + location);
+                  return update;
+                }));
+  }
+
+  @Transactional
+  @PostMapping("/admin/trucks/{id}/document-review")
+  ResponseEntity<?> documentReview(@PathVariable String id, HttpServletRequest req)
+      throws IOException {
+    origin(req);
+    ready();
+    admin(req);
+    ObjectNode b = body(req, 16000);
+    return result(200)
+        .body(
+            change(
+                db -> {
+                  ObjectNode truck = need(db, "trucks", id);
+                  check(b.path("reviewed").isBoolean(), "Specify the review decision.");
+                  boolean approved = b.path("reviewed").booleanValue();
+                  if (approved) {
+                    ObjectNode doc = need(db, "documents", s(b, "documentId"));
+                    check(
+                        s(doc, "truckId").equals(id) && s(doc, "kind").equals("vehicle"),
+                        "Select vehicle evidence for this truck.");
+                    truck.put("reviewedDocument", s(doc, "id")).put("documentReviewedAt", now());
+                  } else {
+                    truck.remove("reviewedDocument");
+                    truck.remove("documentReviewedAt");
+                  }
+                  event(
+                      db,
+                      "document",
+                      id,
+                      approved ? "Broker reviewed vehicle document" : "Document review withdrawn");
+                  return pick(truck, "id documentReviewedAt");
+                }));
+  }
 }

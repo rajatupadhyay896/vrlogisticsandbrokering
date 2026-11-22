@@ -141,7 +141,7 @@ export function loadDetail(l){
  (l.specialInstructions?'<div class="safety-note" style="margin-top:17px">'+esc(l.specialInstructions)+'</div>':'')+
  contactActions(l.phone,l.email,'Your freight request · '+l.id,note);
 }
-export function truckDetail(t){
+export function truckDetail(t,documents=[]){
  const note='Hello '+t.contactName+', Setu Logistics checking availability of your '+t.feet+' ft / '+t.capacityMt+' MT truck ('+t.id+').';
  return '<p class="fine">The following information is only visible to the broker. Verify owner, vehicle documents and insurance before dispatch.</p>'+
  details([['Truck listing',t.id],['Owner / fleet',t.company||'Not provided'],['Contact person',t.contactName],
@@ -150,6 +150,8 @@ export function truckDetail(t){
   ['Registration',t.vehicleNo||'Not supplied'],['Available from',fmt(t.availableFrom)],
   ['Until',fmt(t.availableUntil)],['Status',t.status]])+
  (t.notes?'<div class="safety-note" style="margin-top:17px">'+esc(t.notes)+'</div>':'')+
+ '<h3>Vehicle document review</h3>'+documents.filter(d=>d.truckId===t.id&&d.kind==='vehicle').map(d=>'<div class="document-row">'+esc(d.name)+btn('Download','download-document','data-id="'+esc(d.id)+'"','btn small')+btn('Mark reviewed','review-document','data-id="'+esc(t.id)+'" data-document="'+esc(d.id)+'"','btn small')+'</div>').join('')+
+ (t.documentReviewedAt?btn('Withdraw review','review-document','data-id="'+esc(t.id)+'"','btn small'):'<p class="fine">Link a vehicle document through the Documents tab to review it.</p>')+
  contactActions(t.phone,t.email,'Truck availability · '+t.id,note);
 }
 export function matchingView(result){

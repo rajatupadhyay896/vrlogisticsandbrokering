@@ -1,5 +1,10 @@
 /* Setu Logistics bilingual interface. Static English source remains the canonical UI and data schema. */
 const translations = {
+  'Track a shipment':'खेप की स्थिति देखें',
+  'Customer tracking':'ग्राहक ट्रैकिंग','Share customer link':'ग्राहक लिंक साझा करें','Create customer link':'ग्राहक लिंक बनाएँ',
+  'Current town or landmark':'अभी किस शहर या जगह पर हैं?','Your broker and customer can see this update.':'आपका ब्रोकर और ग्राहक यह जानकारी देख सकते हैं।',
+  'Send location update':'लोकेशन भेजें','Vehicle document review':'वाहन दस्तावेज़ की जाँच','Mark reviewed':'जाँच दर्ज करें','Withdraw review':'जाँच वापस लें',
+  'Vehicle document reviewed':'वाहन दस्तावेज़ जाँचा गया','Link a vehicle document through the Documents tab to review it.':'जाँच के लिए दस्तावेज़ टैब से वाहन का दस्तावेज़ जोड़ें।',
   "Road freight bookings":"सड़क माल ढुलाई की बुकिंग",
   "Open loads":"उपलब्ध लोड",
   "Request a truck for your shipment or find a load for your vehicle. Our freight desk coordinates the rate, placement and delivery paperwork.":"अपना माल भेजने के लिए ट्रक माँगें या अपने ट्रक के लिए लोड खोजें। हमारी टीम भाड़ा, गाड़ी की व्यवस्था और डिलीवरी के दस्तावेज़ संभालती है।",
@@ -590,7 +595,7 @@ export function localize(root:Document|Element=document){
   const tree=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
   const nodes=[];while(tree.nextNode())nodes.push(tree.currentNode);
   for(const node of nodes){
-    if(node.parentElement?.closest('.quote-preview, script, style'))continue;
+    if(node.parentElement?.closest('.quote-preview, [data-react-i18n], script, style'))continue;
     const raw=originalText.has(node)?originalText.get(node):node.nodeValue;
     if(!originalText.has(node))originalText.set(node,raw);
     node.nodeValue=locale==='hi'?translateStatic(raw):raw;

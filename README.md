@@ -24,6 +24,12 @@ TEST_API=http://127.0.0.1:8080 node --test tests/booking.test.mjs
 
 The test reads BROKER_ADMIN_PASSWORD from the environment and creates sample records, payments and a document.
 
+## Brokerage workflows
+
+Transporters can look up a route and request a quotation using a truck listing. Truck owners can reverse the route to search for a return load and apply. Brokers can mark a truck’s vehicle document as reviewed after checking the attached evidence, and withdraw that review.
+
+From a trip in the broker desk, create a customer tracking link and share it privately. Anyone holding that link can read the route, shipment milestones and latest driver-reported location. Drivers use a separate private link for check-ins, document uploads and payment requests.
+
 ## Hosting
 
 The Dockerfile packages the UI and API together for a Java-capable host. To publish only the frontend on Netlify, import this repository and set FREIGHT_API_ORIGIN to the HTTPS origin of your running Spring Boot API before building. The build generates a same-origin API rewrite. Set PUBLIC_ORIGIN on the backend to the exact public frontend origin (for example https://your-site.netlify.app). Configure the JDBC connection and broker password on the backend. Netlify publishes frontend/dist. Uploading frontend assets alone does not run Java or provide a database.

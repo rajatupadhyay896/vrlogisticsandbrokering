@@ -83,7 +83,13 @@ export function tripDetail(dash,trip){
  (docs.length?docs.map(d=>'<div class="document-row"><span>'+esc(d.kind)+' · '+esc(d.name)+'</span><button class="table-btn" data-action="download-document" data-id="'+esc(d.id)+'">Download</button></div>').join(''):'<p class="fine">No evidence yet.</p>')+
  '<h3 class="surface-subhead" style="margin-top:20px">Driver reports ('+req.length+')</h3>'+
  (req.length?req.map(r=>'<p class="fine"><strong>'+esc(r.type==='halt'?'Halt':'Payment')+'</strong> · '+esc(r.id)+' · '+esc(r.status)+' · '+esc(r.type==='payment'?rupees(r.amount):r.location)+' '+esc(r.reason||r.notes||'')+'</p>').join(''):'<p class="fine">No driver reports yet.</p>');
- return head+driver+actions+evidence;
+ const customerLink=location.origin+location.pathname+'#track/'+trip.trackingToken;
+ const customer='<div class="divider"></div><h3>Customer tracking</h3>'+
+ (trip.trackingToken?'<p style="overflow-wrap:anywhere"><a href="'+esc(customerLink)+'">'+esc(customerLink)+'</a></p>'+
+ (customerPhone?'<a class="btn small" target="_blank" rel="noopener noreferrer" href="'+esc(whatsapp(customerPhone,'Setu Logistics · '+trip.id+' '+customerLink))+'">Share customer link</a>':''):
+ btn('Create customer link','tracking-link','data-id="'+esc(trip.id)+'"','btn small'))+
+ (trip.checkIn?'<p>'+esc(trip.checkIn.location)+' · '+esc(trip.checkIn.at)+'</p>':'');
+ return head+customer+driver+actions+evidence;
 }
 export function paymentForm(trip,dash,side){
  const q=dash.quotes.find(x=>x.id===trip.quoteId);
@@ -123,7 +129,9 @@ export function driverView(data,token){
  '<div class="stat"><small>To</small><strong style="font-size:22px">'+esc(t.destination)+'</strong></div>'+
  '<div class="stat"><small>Loading date</small><strong style="font-size:22px">'+fmt(t.loadingDate)+'</strong></div></div>'+
  '<div class="two-pane"><div class="surface"><div class="surface-head"><div><h3>Submit a driver update</h3><p>Updates reach the Setu Logistics broker desk.</p></div></div>'+
- '<div class="surface-body"><div class="feature-grid driver-actions">'+
+ '<div class="surface-body">'+
+ (['assigned','loaded','in_transit'].includes(t.status)?'<form id="driver-checkin"><label>Current town or landmark<input name="location" required minlength="2" maxlength="100"></label><p class="fine">Your broker and customer can see this update.</p><button class="btn small">Send location update</button></form>':'')+
+ (t.checkIn?'<p>'+esc(t.checkIn.location)+' · '+esc(t.checkIn.at)+'</p>':'')+'<div class="feature-grid driver-actions">'+
  '<article class="feature-card"><div class="feature-icon">₹</div><h3>Payment request</h3><p>Request an advance or balance payment from the brokerage team.</p>'+btn('Request payment','driver-request','data-type="payment"','btn primary small')+'</article>'+
  '<article class="feature-card"><div class="feature-icon">⛟</div><h3>En-route halt</h3><p>Report a stoppage, breakdown, traffic delay or other issue with your location.</p>'+btn('Report halt','driver-request','data-type="halt"','btn primary small')+'</article>'+
  '<article class="feature-card"><div class="feature-icon">▧</div><h3>Upload documents</h3><p>Send POD, clearance permits, vehicle documents or loading/unloading photos.</p>'+btn('Upload evidence','driver-file','','btn primary small')+'</article></div>'+

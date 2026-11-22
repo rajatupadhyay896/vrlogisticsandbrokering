@@ -75,7 +75,7 @@ class Trips extends Records {
   }
 
   static ObjectNode view(ObjectNode db, ObjectNode t) {
-    ObjectNode l = need(db, "loads", s(t, "loadId")), info = pick(t, "id status vehicleNo");
+    ObjectNode l = need(db, "loads", s(t, "loadId")), info = pick(t, "id status vehicleNo checkIn");
     info.setAll(pick(l, "origin destination material weightMt loadingDate"));
     info.put("companyPhone", "+917738103505")
         .put("customer", s(l, "company").isEmpty() ? "Transporter" : s(l, "company"));

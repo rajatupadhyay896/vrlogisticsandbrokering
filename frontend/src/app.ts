@@ -1,6 +1,7 @@
 import {createElement} from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
+import {Services,Tracking} from './Services';
 import {Landing} from './Landing';
 import {api,esc,toast,copy,message,VEHICLE_PRESETS} from './lib.js';
 import {localize,setLanguage,getLanguage,t} from './i18n.js';
@@ -9,7 +10,7 @@ import {findLoads,selectLoads,loadCards,applicationForm} from './load-market.js'
 import {loginView,brokerView,loadDetail,truckDetail,matchingView,manualQuoteForm,shareQuote,quoteMessage,applicationDetail} from './broker.js';
 import {driverEntry,driverView,driverRequestForm,fileForm,tripDetail,paymentForm} from './operations.js';
 
-const pages=new Set(['home','find-trucks','find-loads','list-truck','post-load','broker','driver']);
+const pages=new Set(['home','find-trucks','find-loads','list-truck','post-load','broker','driver','track','transporters','truck-owners']);
 const app=document.querySelector('#app');
 const state={page:'home',board:null,config:null,dash:null,adminTab:'overview',search:'',body:'all',busy:false,modal:null,quoteLang:'en',driverToken:'',driver:null,loadSearch:'',loadBody:'all'};
 const pageRoot=createRoot(app);
@@ -30,10 +31,10 @@ function render(){
  if(state.page==='find-trucks')markup=findTrucks(state.board,state.search,state.body)+(state.board===null?'<div class="container"><p class="setup-warning">Live truck data is currently unavailable. Please try again later.</p></div>':'');
  if(state.page==='find-loads')markup=findLoads(state.board,state.loadSearch,state.loadBody)+(state.board===null?'<div class="container"><p class="setup-warning">Live freight requests are unavailable until the server is configured.</p></div>':'');
  if(state.page==='list-truck')markup=formTruck();
- if(state.page==='post-load')markup=formLoad();
+ if(state.page==='post-load')markup=formLoad(state.board?.trucks.find(truck=>location.hash==='#post-load/'+truck.id));
  if(state.page==='broker')markup=state.dash?brokerView(state.dash,state.adminTab):loginView(state.config||{});
  if(state.page==='driver')markup=state.driverToken?driverView(state.driver,state.driverToken):driverEntry();
- flushSync(()=>pageRoot.render(createElement('div',{key:++viewVersion},state.page==='home'?createElement(Landing,{loads:state.board?.loads?.length||0,trucks:state.board?.trucks?.length||0,connected:!!state.board}):null,createElement('div',{dangerouslySetInnerHTML:{__html:markup}}))));
+ flushSync(()=>pageRoot.render(createElement('div',{key:++viewVersion},state.page==='home'?createElement(Landing,{loads:state.board?.loads?.length||0,trucks:state.board?.trucks?.length||0,connected:!!state.board}):state.page==='track'?createElement(Tracking,{token:location.hash.startsWith('#track/')?location.hash.slice(7):''}):['truck-owners','transporters'].includes(state.page)?createElement(Services,{owner:state.page==='truck-owners',board:state.board}):null,createElement('div',{dangerouslySetInnerHTML:{__html:markup}}))));
  localize(app);
 }
 async function refreshAdmin(options:{silent?:boolean}={}){
@@ -56,7 +57,7 @@ async function refreshAdmin(options:{silent?:boolean}={}){
 async function navigate(){
  if(state.modal)closeModal();
  const raw=decodeURIComponent((location.hash||'#home').replace(/^#\/?/,''));
- state.page=raw.startsWith('driver/')?'driver':pages.has(raw)?raw:'home';
+ state.page=raw.startsWith('post-load/')?'post-load':raw.startsWith('track/')?'track':raw.startsWith('driver/')?'driver':pages.has(raw)?raw:'home';
  state.driverToken=state.page==='driver'&&raw.startsWith('driver/')?raw.slice(7):'';
  document.querySelector('#nav').classList.remove('open');
  document.querySelector<HTMLButtonElement>('#menu-toggle').setAttribute('aria-expanded','false');
@@ -294,7 +295,7 @@ document.addEventListener('click',async e=>{
  const languageButton=e.target.closest<HTMLElement>('.language-switch [data-lang]');
  if(languageButton){
   setLanguage(languageButton.dataset.lang);
-  localize(document.body);
+  localize(document.body);window.dispatchEvent(new Event('setu-language'));
   return;
  }
  const pageLink=e.target.closest<HTMLAnchorElement>('[data-page]');
@@ -322,6 +323,14 @@ document.addEventListener('click',async e=>{
    state.adminTab='trips';await refreshTrip(result.trip.id);toast('Trip created. Share the driver link privately.');
   }catch(e){toast(e.message);}
   return;
+ }
+ if(action==='tracking-link'){
+  try{await api('admin/trips/'+id+'/tracking-link',{method:'POST',body:'{}'});await refreshTrip(id);}catch(e){toast(e.message);}return;
+ }
+ if(action==='review-document'){
+  try{await api('admin/trucks/'+id+'/document-review',{method:'POST',body:JSON.stringify({reviewed:!!btn.dataset.document,documentId:btn.dataset.document})});
+   await refreshBoard(true);await refreshAdmin();const truck=truckData(id);if(truck)modal('Truck owner availability',id,truckDetail(truck,state.dash.documents));
+  }catch(e){toast(e.message);}return;
  }
  if(action==='trip-detail'){
   const trip=tripData(id);
@@ -386,7 +395,7 @@ document.addEventListener('click',async e=>{
   const l=loadData(id);if(l)modal('Customer load request',id,loadDetail(l));return;
  }
  if(action==='truck-detail'){
-  const t=truckData(id);if(t)modal('Truck owner availability',id,truckDetail(t));return;
+  const t=truckData(id);if(t)modal('Truck owner availability',id,truckDetail(t,state.dash.documents));return;
  }
  if(action==='matches'){await matches(id);return;}
  if(action==='manual-quote'){quoteForm();return;}
@@ -417,9 +426,14 @@ document.addEventListener('click',async e=>{
 document.addEventListener('submit',async e=>{
  const form=e.target;
  if(!(form instanceof HTMLFormElement))return;
- if(!['truck-form','load-form','login-form','quote-form','driver-open-form','driver-request-form','driver-file-form','broker-file-form','trip-payment-form','load-application-form'].includes(form.id))return;
+ if(!['truck-form','load-form','login-form','quote-form','driver-checkin','driver-open-form','driver-request-form','driver-file-form','broker-file-form','trip-payment-form','load-application-form'].includes(form.id))return;
  e.preventDefault();
  if(!form.reportValidity())return;
+ if(form.id==='driver-checkin'){
+  const button=form.querySelector('button');button.disabled=true;
+  try{await api('public/trips/'+encodeURIComponent(state.driverToken)+'/check-in',{method:'POST',body:JSON.stringify({location:new FormData(form).get('location')})});await refreshDriver();}
+  catch(e){toast(e.message);}finally{button.disabled=false;}return;
+ }
  if(form.id==='truck-form')await submitPublic('truck',form);
  if(form.id==='load-form')await submitPublic('load',form);
  if(form.id==='load-application-form')await submitLoadApplication(form);

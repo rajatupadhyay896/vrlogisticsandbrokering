@@ -8,6 +8,7 @@ export function Landing({loads,trucks,connected}:{loads:number;trucks:number;con
     <div className="dispatch-actions"><a className="btn primary" href="#post-load" data-page="post-load">Request a truck</a>
     <a className="btn" href="#find-loads" data-page="find-loads">Find loads</a></div>
     <a className="owner-link" href="#list-truck" data-page="list-truck">List your truck</a>
+    <nav className="service-links"><a href="#transporters">For transporters</a><a href="#truck-owners">For truck owners</a><a href="#track">Track a shipment</a></nav>
   </div><div className="dispatch-board">
     {!imageFailed&&<img className="truck-photo" src="/freight-truck.webp" onError={()=>setImageFailed(true)} alt="Freight truck on an Indian highway" width="551" height="573"/>}
     <div className="board-links"><a href="#find-loads" data-page="find-loads"><b>{connected?loads:'—'}</b><span>Open loads</span></a>

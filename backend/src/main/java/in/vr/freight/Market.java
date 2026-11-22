@@ -202,7 +202,7 @@ class Market extends Records {
                     pick(
                         t,
                         "id origin destination bodyType feet capacityMt vehicleClass availableFrom"
-                            + " availableUntil status"))
+                            + " availableUntil status documentReviewedAt"))
             .toList();
     var loads =
         rows(db, "loads").reversed().stream()

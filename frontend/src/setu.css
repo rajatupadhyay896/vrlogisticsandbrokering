@@ -14,3 +14,16 @@ body,.btn,button,input,select,textarea,.site-wrap h1,.site-wrap h2,.site-wrap h3
 .section-head h2,.page-heading h1{letter-spacing:-.025em}.mobile-quick-nav a{min-height:50px}
 @media(min-width:760px){.dispatch{grid-template-columns:1.1fr 1fr;gap:56px;padding:64px 32px}}
 @media(max-width:360px){.setu-brand{font-size:18px;gap:5px}.setu-mark{width:25px;height:32px}}
+
+.service-desk{max-width:940px;padding-block:clamp(30px,6vw,72px);display:grid;gap:24px}
+.service-desk header{border-left:4px solid var(--accent,#ae502f);padding-left:clamp(16px,3vw,32px)}
+.service-desk header h1{font-size:clamp(2rem,5vw,3.8rem);line-height:1.08;margin-bottom:12px}
+.service-desk header p{max-width:65ch;margin-bottom:18px}
+.service-desk label{display:grid;gap:5px;font-weight:600;min-width:0}
+.service-desk input{width:100%;max-width:100%;min-height:44px;padding:8px 12px;border:1px solid #a8b1b4;border-radius:6px}
+.route-inputs,.tracking-entry{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin:18px 0}
+.route-inputs label,.tracking-entry label{flex:1 1 170px}
+.lane-result{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:16px 0;border-top:1px solid #d6dedf;overflow-wrap:anywhere}
+.service-desk details{border-bottom:1px solid #c6cfd0;padding-bottom:12px}.service-desk summary{cursor:pointer;font-weight:650}.service-desk details p{margin-top:10px}
+.service-links{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:18px;font-weight:600}
+@media(max-width:540px){.route-inputs{display:grid}.route-inputs button{justify-self:start}.service-desk .surface-body{padding:16px}}

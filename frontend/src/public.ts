@@ -36,18 +36,18 @@ export function formTruck(){
       ['No public phone numbers','Only the brokerage team receives your contact information.']
     ])}</div></div>`;
 }
-export function formLoad(){
+export function formLoad(truck?:{id:string;origin:string;destination:string;feet:number;bodyType:string;vehicleClass:string}){
  const content=`<form id="load-form" autocomplete="on"><div class="form-grid">
   ${sharedContact()}<div class="form-divide"></div>
-  ${field('Loading origin','origin',{required:true,placeholder:'e.g. Taloja, Navi Mumbai'})}
-  ${field('Unloading destination','destination',{required:true,placeholder:'e.g. Vadodara, Gujarat'})}
+  ${field('Loading origin','origin',{value:truck?.origin,required:true,placeholder:'e.g. Taloja, Navi Mumbai'})}
+  ${field('Unloading destination','destination',{value:truck?.destination,required:true,placeholder:'e.g. Vadodara, Gujarat'})}
   ${field('Material / goods','material',{required:true,placeholder:'e.g. Steel coils, packaged FMCG'})}
-  ${field('Preferred vehicle category','vehicleClass',{options:VEHICLE_PRESETS.map(x=>[x.id,x.label]),required:true,full:true,hint:'Choose an indicative category. Length will be suggested; enter your actual cargo weight separately.'})}
+  ${field('Preferred vehicle category','vehicleClass',{value:truck?.vehicleClass,options:VEHICLE_PRESETS.map(x=>[x.id,x.label]),required:true,full:true,hint:'Choose an indicative category. Length will be suggested; enter your actual cargo weight separately.'})}
   ${field('Total cargo weight (MT)','weightMt',{required:true,type:'number',min:.1,max:70,step:.1,placeholder:'e.g. 9'})}
-  ${field('Required truck length (feet)','feet',{required:true,type:'number',min:5,max:65,step:.1,placeholder:'e.g. 32'})}
-  ${field('Vehicle body type','bodyType',{required:true,options:BODIES})}
+  ${field('Required truck length (feet)','feet',{value:truck?.feet,required:true,type:'number',min:5,max:65,step:.1,placeholder:'e.g. 32'})}
+  ${field('Vehicle body type','bodyType',{value:truck?.bodyType,required:true,options:BODIES})}
   ${field('Loading date','loadingDate',{required:true,type:'date',value:today()})}
-  ${field('Special loading instructions','specialInstructions',{textarea:true,full:true,placeholder:'e.g. forklift required, side loading, open 32 ft MXL preferred'})}
+  ${field('Special loading instructions','specialInstructions',{value:truck?'Truck listing '+truck.id:'',textarea:true,full:true,placeholder:'e.g. forklift required, side loading, open 32 ft MXL preferred'})}
   <div class="field full" style="display:none" aria-hidden="true"><label>Website<input name="website" autocomplete="off" tabindex="-1"></label></div>
   <div class="field full checkbox-field"><input type="checkbox" id="load-consent" name="consent" value="yes" required><label for="load-consent">I am authorised to submit this cargo requirement and consent to being contacted by the Setu Logistics brokerage team. I understand that submitted requests are not confirmed bookings.</label></div>
   </div><div class="form-actions"><button class="btn primary" type="submit">Request freight quotation ↗</button><span class="fine">No payment is taken online.</span></div></form>`;
@@ -64,11 +64,11 @@ export function boardCards(trucks,limit=0){
  const list=limit?trucks.slice(0,limit):trucks;
  if(!list.length)return '<div class="surface"><div class="empty"><div class="empty-icon">▰</div><strong>No public vehicles yet.</strong><p>Availability will appear here once truck owners submit their vehicles. You can still post a load for manual review.</p><a class="btn primary" data-page="list-truck" href="#list-truck" style="margin-top:18px">List a vehicle ↗</a></div></div>';
  return '<div class="listing-grid">'+list.map(t=>`<article class="listing"><div class="listing-top"><span class="listing-id">${esc(t.id)}</span>${chip(t.status)}</div>
-  <h3>${esc(t.feet)} FT · ${esc(t.capacityMt)} MT</h3>
+  ${t.documentReviewedAt?'<span class="status-pill">Vehicle document reviewed</span>':''}<h3>${esc(t.feet)} FT · ${esc(t.capacityMt)} MT</h3>
   <p class="listing-note">${esc(VEHICLE_PRESETS.find(p=>p.id===t.vehicleClass)?.label||'Vehicle capacity to be confirmed')}</p>
   <p class="route">${esc(t.origin)}<span>→</span>${esc(t.destination||'Flexible destination')}</p>
   <div class="listing-info"><b>${esc(t.bodyType==='closed'?'Closed / container':t.bodyType==='open'?'Open body':t.bodyType==='flatbed'?'Flatbed':'Special body')}</b><b>${esc(t.feet)} ft truck</b><b>${esc(t.capacityMt)} metric tons</b></div>
-  <div class="listing-footer"><span>From ${fmt(t.availableFrom)}</span><a href="#post-load" data-page="post-load">Request a quote ↗</a></div></article>`).join('')+'</div>';
+  <div class="listing-footer"><span>From ${fmt(t.availableFrom)}</span><a href="#post-load/${esc(t.id)}" data-page="post-load">Request a quote ↗</a></div></article>`).join('')+'</div>';
 }
 export function selectTrucks(board,query='',body='all'){
  return (board?.trucks||[]).filter(t=>(body==='all'||t.bodyType===body)&&[t.id,t.origin,t.destination,t.feet,t.capacityMt,t.bodyType,t.vehicleClass].join(' ').toLowerCase().includes(query.toLowerCase()));
